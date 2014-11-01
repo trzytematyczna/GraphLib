@@ -19,4 +19,9 @@ public class Edge {
 	public void setWeight(int newWeight){
 		this.weight = newWeight;
 	}
+
+	public boolean isEqual(Edge e) {
+		if (this.weight == e.getWeight()) return true;
+		return false;
+	}
 }

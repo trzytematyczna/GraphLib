@@ -29,21 +29,6 @@ public class MatrixGraph implements Graph{
 		this.hashEdges= new HashMap<Edge, Integer>();
 	}
 	
-//	public MatrixGraph(Vertex[] vertex, Edge[] edge) {
-//		int index = 0;
-//		this.hashVertices= new HashMap<Vertex, Integer>();
-//		int size = vertex.length;
-//		for(Vertex ver : vertex){
-//			hashVertices.put(ver, index++);
-//		}
-//		index = 0;
-//		this.hashEdges= new HashMap<Edge, Integer>();
-//		for(Edge ed : edge){
-//			hashEdges.put(ed, index++);
-//		}
-//		this.matrix = new Integer[this.size][this.size];
-//	}
-	
 	@SuppressWarnings(value = { "sth_wrong" })
 	public MatrixGraph(Integer [] [] list, int size) {
 		int indexE = 0;
@@ -60,24 +45,26 @@ public class MatrixGraph implements Graph{
 			inVer = new Vertex(entity[0]);
 			outVer = new Vertex(entity[1]);
 			ed= new Edge(entity[2]);
-			if(!isThere(inVer, hashVertices)){
-				hashVertices.put(inVer, inVer.getValue());
+			if(!isVertexExists(inVer, hashVertices)){
+				hashVertices.put(inVer, inVer.getName());
 			}
-			if(!isThere(outVer, hashVertices)){
-				hashVertices.put(outVer, outVer.getValue());
+			if(!isVertexExists(outVer, hashVertices)){
+				hashVertices.put(outVer, outVer.getName());
 			}
 			hashEdges.put(ed, indexE++);				
-//			this.matrix[inVer.getValue()-1][outVer.getValue()-1] = this.hashEdges.get(ed);
-			this.matrix[inVer.getValue()-1][outVer.getValue()-1] = this.hashEdges.get(ed);
+//			this.matrix[inVer.getName()-1][outVer.getName()-1] = this.hashEdges.get(ed);
+			this.matrix[inVer.getName()-1][outVer.getName()-1] = this.hashEdges.get(ed);
 		}
 	}
+
 	public MatrixGraph(LinkedList<EntryFile> list, int size) {
 		int indexE = 0;
+		int indexV = 0;
 		Vertex inVer;
 		Vertex outVer;
 		Edge ed;
 		
-		this.size = maxList(list);
+//		this.size = list.size();
 		this.hashVertices= new HashMap<Vertex, Integer>();
 		this.hashEdges= new HashMap<Edge, Integer>();
 		this.matrix = initMatrix(size);
@@ -87,17 +74,58 @@ public class MatrixGraph implements Graph{
 			inVer = new Vertex(list.get(i).getInVertex());
 			outVer = new Vertex(list.get(i).getOutVertex());
 			ed= new Edge(list.get(i).getEdge());
-			if(!isThere(inVer, hashVertices)){
-				hashVertices.put(inVer, inVer.getValue());
+			if(!isVertexExists(inVer, hashVertices)){
+				hashVertices.put(inVer, inVer.getName());
 			}
-			if(!isThere(outVer, hashVertices)){
-				hashVertices.put(outVer, outVer.getValue());
+			if(!isVertexExists(outVer, hashVertices)){
+				hashVertices.put(outVer, outVer.getName());
 			}
 			hashEdges.put(ed, indexE++);				
-			this.matrix[inVer.getValue()-1][outVer.getValue()-1] = this.hashEdges.get(ed);
+			this.matrix[inVer.getName()-1][outVer.getName()-1] = this.hashEdges.get(ed);
 		}
 	
 	}
+	public MatrixGraph(LinkedList<EntryFile> list) {
+		int indexE = 0;
+		int indexV = 0;
+		Vertex inVer;
+		Vertex outVer;
+		Edge ed;
+		
+		this.hashVertices= new HashMap<Vertex, Integer>();
+		this.hashEdges= new HashMap<Edge, Integer>();
+
+		for(int i=0; i<list.size();i++){
+			inVer = new Vertex(list.get(i).getInVertex());
+			outVer = new Vertex(list.get(i).getOutVertex());
+			ed= new Edge(list.get(i).getEdge());
+			if(!isVertexExists(inVer, this.hashVertices)){
+				this.hashVertices.put(inVer, indexV++);
+			}
+			if(!isVertexExists(outVer, this.hashVertices)){
+				this.hashVertices.put(outVer, indexV++);
+			}
+			this.hashEdges.put(ed, indexE++);				
+		}
+		
+		this.size = this.hashVertices.size();
+		this.matrix = initMatrix(this.size);
+		for(int i=0; i<list.size();i++){
+//			this.matrix[getVertexValue(list.get(i).getInVertex())][getVertexValue(list.get(i).getOutVertex())] = this.hashEdges.get(ed);
+		}
+	}
+	
+	public Integer getVertexValue(int key){
+		int foundValue = -1;
+		for(Vertex v : this.hashVertices.keySet()){
+			if(v.getName() == key){
+				foundValue = this.hashVertices.get(v);
+			}
+		}
+		return foundValue;
+	}
+	
+	
 	private int maxList(LinkedList<EntryFile> list) {
 		int max=0;
 		for(int i=0; i<list.size(); i++){
@@ -107,7 +135,7 @@ public class MatrixGraph implements Graph{
 		}
 		return max;
 	}
-	public boolean isThere(Vertex vertex, HashMap<Vertex, Integer> haszmap){
+	public boolean isVertexExists(Vertex vertex, HashMap<Vertex, Integer> haszmap){
 		for(Vertex v : haszmap.keySet()){
 			if(vertex.isEqual(v)){
 				return true;
@@ -128,8 +156,8 @@ public class MatrixGraph implements Graph{
 	}
 
 	public boolean addVertex(Vertex vertex) {
-		int index = vertex.getValue();
-		if(!isThere(vertex, hashVertices)){
+		int index = vertex.getName();
+		if(!isVertexExists(vertex, hashVertices)){
 			if(this.size>index){
 				hashVertices.put(vertex, index);
 				
@@ -188,8 +216,8 @@ public class MatrixGraph implements Graph{
 	public LinkedList<Vertex> vertexNeighbours(Vertex vertex) {
 		
 		LinkedList<Vertex> neighbours = new LinkedList<Vertex>();
-		if(isThere(vertex, hashVertices)){
-			int position = vertex.getValue()-1;
+		if(isVertexExists(vertex, hashVertices)){
+			int position = vertex.getName()-1;
 			for(int i=0; i<matrix.length; i++){
 				if( matrix[i][position] != -1 && matrix[i][position] != null){
 					//hashmap has all values - int's according to names in vertices
@@ -218,8 +246,8 @@ public class MatrixGraph implements Graph{
 
 	public LinkedList<Edge> incidentEdges(Vertex vertex) {
 		LinkedList<Edge> incident = new LinkedList<Edge>();
-		if(isThere(vertex, hashVertices)){
-			int index = vertex.getValue()-1;
+		if(isVertexExists(vertex, hashVertices)){
+			int index = vertex.getName()-1;
 			for(int i=0; i<matrix.length; i++){
 				if( matrix[i][index] != -1){
 					incident.add(getEdge(matrix[i][index]));
@@ -255,6 +283,12 @@ public class MatrixGraph implements Graph{
 		if(matrix[hashVertices.get(v1)][hashVertices.get(v2)]!=-1){
 			return true;
 		}
+		return false;
+	}
+
+	@Override
+	public boolean deleteEdge(Vertex v1, Vertex v2) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 	

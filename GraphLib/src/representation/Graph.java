@@ -11,7 +11,7 @@ public interface Graph {
 	public boolean addVertex(Vertex vertex);
 	public boolean deleteVertex(Vertex vertex);
 	public boolean addEdge(Edge edge, Vertex v1, Vertex v2);
-	public boolean deleteEdge(Edge edge);
+	public boolean deleteEdge(Vertex v1, Vertex v2);
 	public LinkedList<Vertex> vertexNeighbours(Vertex vertex);
 	public LinkedList<Edge>incidentEdges(Vertex vertex);
 	public int vertexCount();

@@ -2,23 +2,23 @@ package graph;
 
 public class Vertex {
 
-	int ver; 
+	int name; 
 	
 	public Vertex(int i) {
-		this.ver = i;
+		this.name = i;
 	}
 	public Vertex() {
 		// TODO Auto-generated constructor stub
 	}
 	
 	public boolean isEqual(Vertex vertex){
-		if(this.ver == vertex.ver){
+		if(this.name == vertex.name){
 			return true;
 		}
 		return false;
 	}
 	
-	public int getValue(){
-		return this.ver;
+	public int getName(){
+		return this.name;
 	}
 }
