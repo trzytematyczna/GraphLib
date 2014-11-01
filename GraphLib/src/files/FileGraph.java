@@ -25,14 +25,14 @@ public class FileGraph {
 			String sCurrentLine;
  
 			br = new BufferedReader(new FileReader(path));
- 
 			while ((sCurrentLine = br.readLine()) != null) {
 				sCurrentLine = sCurrentLine.replace(" ", "");
 //				System.out.println(sCurrentLine);
 				String [] s = sCurrentLine.split(";");
 				EntryFile entry = new EntryFile(Integer.parseInt(s[0]),Integer.parseInt(s[1]),Integer.parseInt(s[2]));
 				list.add(entry);
-			
+
+					
 			}
 		this.graphSize = list.size();
 		} catch (IOException e) {

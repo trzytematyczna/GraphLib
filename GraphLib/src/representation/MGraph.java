@@ -24,18 +24,21 @@ public class MGraph implements Graph{
 		for(int i=0; i<list.size();i++){
 			inVer = new Vertex(list.get(i).getInVertex());
 			outVer = new Vertex(list.get(i).getOutVertex());
-			if(!isVertexExists(inVer, this.hashVertices)){
-				this.hashVertices.put(inVer, indexV++);
-			}
-			if(!isVertexExists(outVer, this.hashVertices)){
-				this.hashVertices.put(outVer, indexV++);
-			}
+			addVertex(inVer);
+			addVertex(outVer);
+//			if(!isVertexExists(inVer, this.hashVertices)){
+//				this.hashVertices.put(inVer, indexV++);
+//			}
+//			if(!isVertexExists(outVer, this.hashVertices)){
+//				this.hashVertices.put(outVer, indexV++);
+//			}
 		}
 		
 		this.size = this.hashVertices.size();
 		this.matrix = initMatrix(this.size);
 		for(int i=0; i<list.size();i++){
-			this.matrix[getVertexValue(list.get(i).getInVertex())][getVertexValue(list.get(i).getOutVertex())] = new Edge (list.get(i).getEdge());
+			addEdge(new Edge (list.get(i).getEdge()), new Vertex(list.get(i).getInVertex()), new Vertex(list.get(i).getOutVertex())); 
+//			this.matrix[getVertexValue(list.get(i).getInVertex())][getVertexValue(list.get(i).getOutVertex())] = new Edge (list.get(i).getEdge());
 		}
 	}
 	public boolean isVertexExists(Vertex vertex, HashMap<Vertex, Integer> haszmap){
