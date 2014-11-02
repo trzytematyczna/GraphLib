@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 
-public class ListGraph implements Graph {
+public class ListGraphN implements Graph {
 
 	/**
 	 * Element - structure that has info about Edge and corresponding vertex (ending/beggining depending on
@@ -47,12 +47,10 @@ public class ListGraph implements Graph {
 	
 	listRep[] vertices;
 	
-	public ListGraph(LinkedList<EntryFile> list) {
+	public ListGraphN(LinkedList<EntryFile> list) {
 		Vertex inVer;
 		Vertex outVer;
 		Edge newEdge;
-		Element elementBeg;
-		Element elementEnd;
 		
 		int size =preprocess(list);
 		this.vertices = new listRep[size];
@@ -77,8 +75,8 @@ public class ListGraph implements Graph {
 				this.vertices = enlargeMatrix(this.vertices);
 				space = freeSpace();
 			}
-			this.vertices[space] = new listRep(vertex, new LinkedList<ListGraph.Element>(), 
-					new LinkedList<ListGraph.Element>());
+			this.vertices[space] = new listRep(vertex, new LinkedList<ListGraphN.Element>(), 
+					new LinkedList<ListGraphN.Element>());
 			return true;
 		}
 		return false;
@@ -137,23 +135,9 @@ public class ListGraph implements Graph {
 	}
 
 	@Override
-	public boolean deleteEdge(Vertex inVer, Vertex outVer) {
-		if(!isVertexExists(inVer, this.vertices) || !isVertexExists(outVer, this.vertices)) return false;
-		for(int i =0; i< this.vertices.length; i++){
-			if(this.vertices[i]!=null){
-				if(this.vertices[i].vertex.isEqual(inVer)){
-					for(Element e: this.vertices[i].begin){
-						this.vertices[i].begin.remove(e);
-					}
-				}
-				if(this.vertices[i].vertex.isEqual(outVer)){
-					for(Element e: this.vertices[i].end){
-						this.vertices[i].end.remove(e);
-					}				
-				}
-			}
-		}
-		return true;
+	public boolean deleteEdge(Vertex v1, Vertex v2) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
@@ -182,7 +166,9 @@ public class ListGraph implements Graph {
 		int count = 0;
 		for(int i = 0 ; i<this.vertices.length;i++){
 			if(this.vertices[i] != null ) {
-					count+=this.vertices[i].begin.size();
+				for(int j=0; j<this.vertices[i].begin.size(); j++){
+					count++;
+				}
 			}
 		}
 		return count;
@@ -190,20 +176,7 @@ public class ListGraph implements Graph {
 
 	@Override
 	public boolean areNeigbours(Vertex v1, Vertex v2) {
-		if(isVertexExists(v1, this.vertices) && isVertexExists(v2, this.vertices)){
-			for(int i =0; i< this.vertices.length; i++){
-				if(this.vertices[i]!=null){
-					if(this.vertices[i].vertex.isEqual(v1)){
-						for(Element e: this.vertices[i].begin){
-							if(e.ver.isEqual(v2)) return true;
-						}
-						for(Element e: this.vertices[i].end){
-							if(e.ver.isEqual(v2)) return true;
-						}
-					}
-				}
-			}
-		}
+		// TODO Auto-generated method stub
 		return false;
 	}
 	
