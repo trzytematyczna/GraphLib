@@ -10,31 +10,31 @@ import java.util.LinkedList;
 public class MGraph implements Graph{
 	
 	public Edge[][] matrix;
-	int size;
 	
 	HashMap<Vertex, Integer> hashVertices;
 	
 	public MGraph(LinkedList<EntryFile> list) {
 		Vertex inVer;
 		Vertex outVer;
-		
+		int indexV = 0;
 		this.hashVertices= new HashMap<Vertex, Integer>();
+
+		int size = preprocess(list);
+		this.matrix = initMatrix(size);
 
 		for(int i=0; i<list.size();i++){
 			inVer = new Vertex(list.get(i).getInVertex());
 			outVer = new Vertex(list.get(i).getOutVertex());
-			addVertex(inVer);
-			addVertex(outVer);
-//			if(!isVertexExists(inVer, this.hashVertices)){
-//				this.hashVertices.put(inVer, indexV++);
-//			}
-//			if(!isVertexExists(outVer, this.hashVertices)){
-//				this.hashVertices.put(outVer, indexV++);
-//			}
+//			addVertex(inVer);
+//			addVertex(outVer);
+			if(!isVertexExists(inVer, this.hashVertices)){
+				this.hashVertices.put(inVer, indexV++);
+			}
+			if(!isVertexExists(outVer, this.hashVertices)){
+				this.hashVertices.put(outVer, indexV++);
+			}
 		}
 		
-		this.size = this.hashVertices.size();
-		this.matrix = initMatrix(this.size);
 		for(int i=0; i<list.size();i++){
 			addEdge(new Edge (list.get(i).getEdge()), new Vertex(list.get(i).getInVertex()), new Vertex(list.get(i).getOutVertex())); 
 //			this.matrix[getVertexValue(list.get(i).getInVertex())][getVertexValue(list.get(i).getOutVertex())] = new Edge (list.get(i).getEdge());
@@ -85,7 +85,7 @@ public class MGraph implements Graph{
 		Edge[][] newMatrix = new Edge[size][size];
 		for(int i=0; i<size; i++){
 			for(int j=0; j<size; j++){
-				newMatrix[i][j] = new Edge(-1);
+				newMatrix[i][j] = null;//new Edge(-1);
 			}
 		}
 		return newMatrix;
@@ -94,28 +94,43 @@ public class MGraph implements Graph{
 	
 	public boolean addVertex(Vertex vertex) {
 		if(isVertexExists(vertex, this.hashVertices)) return false;
-		
 		int space = freeSpace();
 		if( space == -1){
 			this.matrix = enlargeMatrix(this.matrix);
 			int position = this.hashVertices.size();
 			this.hashVertices.put(vertex, position);
-			putInAllRowAndCol(position, -1);
+//			putInAllRowAndCol(position, -1);
 		}
 		else{ //there is space to put new vertex
 			this.hashVertices.put(vertex, space);
-			putInAllRowAndCol(space, -1);	
+//			putInAllRowAndCol(space, -1);	
 		}
 		return true;
 	}
 
 	private Edge[][] enlargeMatrix(Edge[][] matrix2) {
 		// TODO Auto-generated method stub
-		//create new matrix
-		//init new matrix with edge(-1)
-		//copy old matrix to new matrix
-		//return new matrix
-		return null;
+		int current_size = matrix2.length;
+		int new_size = current_size+50;
+		Edge [][] newMatrix = new Edge [new_size][new_size];
+//		newMatrix = initMatrix(new_size);
+		
+		for(int i=0; i<current_size; i++){
+			for(int j=0; j<current_size; j++){
+				newMatrix[i][j] = matrix2[i][j];
+			}
+		}
+		for(int i=current_size; i<new_size; i++){
+			for(int j=0; j<new_size; j++){
+				newMatrix[i][j] = null;
+			}
+		}
+		for(int i=0; i<new_size; i++){
+			for(int j=current_size; j<new_size; j++){
+				newMatrix[i][j] = null;
+			}
+		}
+		return newMatrix;
 	}
 	/**
 	 * 
@@ -123,7 +138,7 @@ public class MGraph implements Graph{
 	 * @param what value of edge (-1 - vertex exists with no edges
 	 */
 	private void putInAllRowAndCol(int position, int what) {
-		for(int i=0; i<this.size; i++){
+		for(int i=0; i<this.matrix.length; i++){
 			this.matrix[position][i] = new Edge(what);
 			this.matrix[i][position] = new Edge(what);
 		}
@@ -131,7 +146,7 @@ public class MGraph implements Graph{
 	}
 	
 	private void putNullInAllRowAndCol(int position) {
-		for(int i=0; i<this.size; i++){
+		for(int i=0; i<this.matrix.length; i++){
 			this.matrix[position][i] =null;
 			this.matrix[i][position] = null;
 		}
@@ -142,9 +157,10 @@ public class MGraph implements Graph{
 	 * @return free position or -1 if no free space
 	 */
 	private int freeSpace() {
-		for(int i=0; i<this.size; i++){
-//			for(int j=0; j<this.size; j++){
-					if(this.matrix[i][0] == null) return i;
+		for(int i=0; i<this.matrix.length; i++){
+			if(getVertexFromValue(i) == null) return i;
+//			for(int j=0; j<this.matrix.length; j++){
+//					if(this.matrix[i][j] == null) return i;
 //			}
 		}
 		return -1;
@@ -156,7 +172,8 @@ public class MGraph implements Graph{
 		if(!isVertexExists(vertex, this.hashVertices)) return false;
 		
 			putNullInAllRowAndCol(getVertexValue(vertex.getName()));
-			this.hashVertices.remove(getVertexFromName(vertex.getName()));
+			Vertex v =getVertexFromName(vertex.getName());
+			this.hashVertices.remove(v);
 		
 		return true;
 	}
@@ -172,7 +189,7 @@ public class MGraph implements Graph{
 	@Override
 	public boolean deleteEdge(Vertex in, Vertex out) {
 		if(!isVertexExists(in, this.hashVertices) || !isVertexExists(out, this.hashVertices)) return false;
-		this.matrix[getVertexValue(in.getName())][getVertexValue(out.getName())] = new Edge(-1);
+		this.matrix[getVertexValue(in.getName())][getVertexValue(out.getName())] = null;//new Edge(-1);
 		return false;
 	}
 
@@ -182,11 +199,13 @@ public class MGraph implements Graph{
 		
 		if(isVertexExists(vertex, this.hashVertices)){
 			int position = getVertexValue(vertex.getName());
-			for(int i=0; i<this.size; i++){
-				if(this.matrix[position][i].getWeight() != -1 && this.matrix[position][i] != null)  {
+			for(int i=0; i<this.matrix.length; i++){
+//				if(this.matrix[position][i].getWeight() != -1 && this.matrix[position][i] != null)  {
+				if(this.matrix[position][i] != null)  {
 					neighbours.add(getVertexFromValue(i));
 				}
-				if(this.matrix[i][position].getWeight() != -1 && this.matrix[i][position] != null){
+//				if(this.matrix[i][position].getWeight() != -1 && this.matrix[i][position] != null){
+				if(this.matrix[i][position] != null)  {
 					neighbours.add(getVertexFromValue(i));					
 				}
 			}
@@ -200,11 +219,13 @@ public class MGraph implements Graph{
 		LinkedList<Edge> incident = new LinkedList<Edge>();
 		if(isVertexExists(vertex, this.hashVertices)){
 			int position = getVertexValue(vertex.getName());
-			for(int i=0; i<this.size; i++){
-				if(this.matrix[position][i].getWeight() != -1 && this.matrix[position][i] != null)  {
+			for(int i=0; i<this.matrix.length; i++){
+//				if(this.matrix[position][i].getWeight() != -1 && this.matrix[position][i] != null)  {
+				if(this.matrix[position][i] != null)  {
 					incident.add(this.matrix[position][i]);
 				}
-				if(this.matrix[i][position].getWeight() != -1 && this.matrix[i][position] != null){
+//				if(this.matrix[i][position].getWeight() != -1 && this.matrix[i][position] != null){
+				if(this.matrix[i][position] != null){
 					incident.add(this.matrix[i][position]);
 				}
 			}
@@ -221,9 +242,12 @@ public class MGraph implements Graph{
 	@Override
 	public int edgeCount() {
 		int count= 0;
-		for (int i = 0; i < this.size; i++){
-			for (int j = 0; j < this.size; j++){
-				if (this.matrix[i][j].getWeight() != -1 && this.matrix[i][j] != null ) count++;
+		for (int i = 0; i < this.matrix.length; i++){
+			for (int j = 0; j < this.matrix.length; j++){
+				if(this.matrix[i][j]!=null){
+//					if (this.matrix[i][j].getWeight() != -1 && this.matrix[i][j] != null ) 
+						count++;
+				}
 			}
 		}
 		return count;
@@ -232,12 +256,30 @@ public class MGraph implements Graph{
 	@Override
 	public boolean areNeigbours(Vertex v1, Vertex v2) {
 		if(isVertexExists(v1, this.hashVertices) && isVertexExists(v2, this.hashVertices)){
-			if(this.matrix[getVertexValue(v1.getName())][getVertexValue(v2.getName())].getWeight()!=-1 &&
-					this.matrix[getVertexValue(v1.getName())][getVertexValue(v2.getName())]!= null){
+//			if(this.matrix[getVertexValue(v1.getName())][getVertexValue(v2.getName())].getWeight()!=-1 &&
+//					this.matrix[getVertexValue(v1.getName())][getVertexValue(v2.getName())]!= null){
+			if(this.matrix[getVertexValue(v1.getName())][getVertexValue(v2.getName())]!= null ||
+					this.matrix[getVertexValue(v2.getName())][getVertexValue(v1.getName())]!= null ){
 				return true;
 			}
 		}
 		return false;
 	}
+	
+	private int preprocess(LinkedList<EntryFile> list){
+		LinkedList<Integer> values = new LinkedList<Integer>();
+
+		for(int i=0; i<list.size();i++){
+			if(!values.contains(list.get(i).getInVertex())){
+				values.add(list.get(i).getInVertex());
+			}
+			if(!values.contains(list.get(i).getOutVertex())){
+				values.add(list.get(i).getOutVertex());
+			}
+		}
+		
+		return values.size();
+	}
+
 
 }

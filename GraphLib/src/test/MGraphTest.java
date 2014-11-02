@@ -23,17 +23,31 @@ public class MGraphTest {
 		this.graph = new MGraph(fg.graphRead(path));
 	}
 	
-	@Test
-	public void deleteVertexTest() {
-		this.graph.deleteVertex(new Vertex(16));
-		assertEquals(3,this.graph.vertexCount());
-	}
+//	@Test
+//	public void deleteVertexTest() {
+//		this.graph.deleteVertex(new Vertex(16));
+//		assertEquals(3,this.graph.vertexCount());
+//	}
 	
 	@Test
 	public void addVertexTest(){
+		//4 : 1 16 20 8
 		this.graph.deleteVertex(new Vertex(16));
+		//3: 1 20 8
 		this.graph.addVertex(new Vertex(17));
-		assertEquals(4, this.graph.vertexCount());
+		//4: 1 20 8 17
+		this.graph.addVertex(new Vertex(18));
+		//5: 1 20 8 17 18
+		this.graph.addVertex(new Vertex(19));
+		//6: 1 20 8 17 18 19
+		assertEquals(6, this.graph.vertexCount());
+		assertEquals(true, this.graph.areNeigbours(new Vertex(20), new Vertex(8)));
+	}
+	
+	@Test
+	public void addVertexEnlargeTest(){
+		this.graph.addVertex(new Vertex(17));
+		assertEquals(5, this.graph.vertexCount());
 	}
 	
 	@Test
