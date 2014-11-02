@@ -121,6 +121,55 @@ public class ListGraphTest {
 	
 	@Test
 	public void incidentEdgesTest(){
+		LinkedList<Edge> neighbours1 = new LinkedList<Edge>();
+		LinkedList<Edge> neighbours2 = new LinkedList<Edge>();
+		neighbours1.add(new Edge(48));
+		neighbours1.add(new Edge(10));
+		
+		neighbours2.add(new Edge(10));
+		
+		LinkedList<Edge> newList = this.graph.incidentEdges(new Vertex(1));
+		
+		for(int i=0; i<neighbours1.size(); i++){
+			for(Edge v : newList){
+				 if(neighbours1.get(i).isEqual(v)){
+					 assertEquals(true, neighbours1.get(i).isEqual(v));
+				 }
+			}
+		}		
+		
+		this.graph.deleteVertex(new Vertex(16));
+		
+		newList = this.graph.incidentEdges(new Vertex(1));
+		for(int i=0; i<neighbours2.size(); i++){
+			for(Edge v : newList){
+				 if(neighbours2.get(i).isEqual(v)){
+					 assertEquals(true, neighbours2.get(i).isEqual(v));
+				 }
+			}
+		}			
+		
+		this.graph.addVertex(new Vertex(16));
+		
+		newList = this.graph.incidentEdges(new Vertex(1));
+		for(int i=0; i<neighbours2.size(); i++){
+			for(Edge v : newList){
+				 if(neighbours2.get(i).isEqual(v)){
+					 assertEquals(true, neighbours2.get(i).isEqual(v));
+				 }
+			}
+		}				
+		this.graph.addEdge(new Edge(100), new Vertex(16), new Vertex(1));
+		
+		newList = this.graph.incidentEdges(new Vertex(1));
+
+		for(int i=0; i<neighbours2.size(); i++){
+			for(Edge v : newList){
+				 if(neighbours2.get(i).isEqual(v)){
+					 assertEquals(true, neighbours2.get(i).isEqual(v));
+				 }
+			}
+		}			
 		
 	}
 }

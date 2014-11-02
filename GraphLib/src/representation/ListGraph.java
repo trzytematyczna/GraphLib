@@ -52,8 +52,6 @@ public class ListGraph implements Graph {
 		Vertex inVer;
 		Vertex outVer;
 		Edge newEdge;
-		Element elementBeg;
-		Element elementEnd;
 		
 		int size =preprocess(list);
 		this.vertices = new listRep[size];

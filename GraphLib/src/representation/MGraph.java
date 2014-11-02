@@ -15,7 +15,6 @@ public class MGraph implements Graph{
 	HashMap<Vertex, Integer> hashVertices;
 	
 	public MGraph(LinkedList<EntryFile> list) {
-		int indexV = 0;
 		Vertex inVer;
 		Vertex outVer;
 		
