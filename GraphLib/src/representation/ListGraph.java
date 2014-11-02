@@ -11,6 +11,12 @@ import java.util.LinkedList;
 
 public class ListGraph implements Graph {
 
+	/**
+	 * Element - structure that has info about Edge and corresponding vertex (ending/beggining depending on
+	 * list [endings/beginnings])
+	 * @author mra
+	 *
+	 */
 	private class Element{
 		Edge edge;
 		Vertex ver;
@@ -21,6 +27,12 @@ public class ListGraph implements Graph {
 		}
 	}
 	
+	/**
+	 * Structure needed for storing info about vertex and its two lists - beginnings -> when this node is a beginning of edge
+	 * and endings - when it ends the edge
+	 * @author mra
+	 *
+	 */
 	private class listRep {
 		Vertex vertex;
 		LinkedList<Element> begin;
@@ -32,7 +44,6 @@ public class ListGraph implements Graph {
 			this.end = end;
 		}
 	}
-//	HashMap<Vertex, LinkedList<Element>> vertices;
 	
 	listRep[] vertices;
 	
@@ -50,45 +61,13 @@ public class ListGraph implements Graph {
 			inVer = new Vertex(list.get(i).getInVertex());
 			outVer = new Vertex(list.get(i).getOutVertex());
 			newEdge = new Edge(list.get(i).getEdge());
-//			elementBeg = new Element(newEdge, outVer);
-//			elementEnd = new Element(newEdge, inVer);
 			
 			addVertex(inVer);
 			addVertex(outVer);
 			addEdge(newEdge, inVer, outVer);
-//			if(!isVertexExists(inVer, this.vertices)){
-//				this.vertices.put(inVer, new LinkedList<ListGraph.Element>());
-//				this.vertices.get(inVer).add(newElement);
-//			}
-//			else{
-//				addToListFromVertexKey(inVer, newElement);
-//			}
-//			if(!isVertexExists(outVer, this.vertices)){
-//				this.vertices.put(outVer, new LinkedList<ListGraph.Element>());
-//				this.vertices.get(outVer).add(newElement);
-//			}
-//			else{
-//				addToListFromVertexKey(outVer, newElement);
-//			}
-			
 		}
 	}
-//	private void addToListFromVertexKey(Vertex vertex, Element newElement) {
-//		for(Vertex v : this.vertices){
-//			if(vertex.isEqual(v)){
-//				this.vertices.get(v).add(newElement);
-//			}
-//		}
-//		
-//	}
-//	private boolean isVertexExists(Vertex vertex,	HashMap<Vertex, LinkedList<Element>> haszmap) {
-//		for(Vertex v : haszmap.keySet()){
-//			if(vertex.isEqual(v)){
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
+
 	@Override
 	public boolean addVertex(Vertex vertex) {
 		if(!isVertexExists(vertex, this.vertices)){
@@ -96,13 +75,10 @@ public class ListGraph implements Graph {
 			
 			if(space==-1){
 				this.vertices = enlargeMatrix(this.vertices);
+				space = freeSpace();
 			}
-//			else{
-			this.vertices[space] = new listRep(vertex, new LinkedList<ListGraph.Element>(), new LinkedList<ListGraph.Element>());
-//				this.vertices[space].vertex = vertex;
-//				this.vertices[space].begin = new LinkedList<ListGraph.Element>();
-//				this.vertices[space].end = new LinkedList<ListGraph.Element>();				
-//			}
+			this.vertices[space] = new listRep(vertex, new LinkedList<ListGraph.Element>(), 
+					new LinkedList<ListGraph.Element>());
 			return true;
 		}
 		return false;
@@ -130,13 +106,13 @@ public class ListGraph implements Graph {
 	public boolean deleteVertex(Vertex vertex) {
 		if(!isVertexExists(vertex, this.vertices)){
 			for(int i=0; i<this.vertices.length; i++){
-//				if(this.vertices[i]!=null){
+				if(this.vertices[i]!=null){
 					if(this.vertices[i].vertex.isEqual(vertex)){
 						this.vertices[i].vertex = null;
 						this.vertices[i].begin = null;
 						this.vertices[i].end = null;
 					}
-//				}
+				}
 			}
 		}
 		return false;
@@ -180,14 +156,24 @@ public class ListGraph implements Graph {
 
 	@Override
 	public int vertexCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		int count = 0;
+		for(int i = 0 ; i<this.vertices.length;i++){
+			if(this.vertices[i] != null ) count++;
+		}
+		return count;
 	}
 
 	@Override
 	public int edgeCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		int count = 0;
+		for(int i = 0 ; i<this.vertices.length;i++){
+			if(this.vertices[i] != null ) {
+				for(int j=0; j<this.vertices[i].begin.size(); j++){
+					count++;
+				}
+			}
+		}
+		return count;
 	}
 
 	@Override

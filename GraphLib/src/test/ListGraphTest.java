@@ -21,6 +21,15 @@ public class ListGraphTest {
 	public void addVertexTest() {
 	}
 
+	@Test 
+	public void vertexCountTest(){
+		assertEquals(4, this.graph.vertexCount());
+	}
+	
+	@Test 
+	public void edgeCountTest(){
+		assertEquals(3, this.graph.edgeCount());
+	}
 }
 
 
