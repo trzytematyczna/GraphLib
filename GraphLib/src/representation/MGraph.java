@@ -269,5 +269,15 @@ public class MGraph implements Graph{
 		return values.size();
 	}
 
-
+	public int weightCount() {
+		int count= 0;
+		for (int i = 0; i < this.matrix.length; i++){
+			for (int j = 0; j < this.matrix.length; j++){
+				if(this.matrix[i][j]!=null){
+					if(getVertexFromValue(i).getName()<getVertexFromValue(j).getName()) count+=this.matrix[i][j].getWeight(); 
+				}
+			}
+		}
+		return count;
+	}
 }

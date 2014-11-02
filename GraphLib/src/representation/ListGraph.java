@@ -219,6 +219,9 @@ public class ListGraph implements Graph {
 		for(int i = 0 ; i<this.vertices.length;i++){
 			if(this.vertices[i] != null ) {
 					count+=this.vertices[i].begin.size();
+//					for(Element e : this.vertices[i].begin){
+//						if(this.vertices[i].vertex.getName()<e.ver.getName())count+=e.edge.getWeight();
+//					}
 			}
 		}
 		return count;
@@ -258,5 +261,15 @@ public class ListGraph implements Graph {
 		return values.size();
 	}
 
-
+	public int weightCount() {
+		int count = 0;
+		for(int i = 0 ; i<this.vertices.length;i++){
+			if(this.vertices[i] != null ) {
+					for(Element e : this.vertices[i].begin){
+						if(this.vertices[i].vertex.getName()<e.ver.getName())count+=e.edge.getWeight();
+					}
+			}
+		}
+		return count;
+	}
 }

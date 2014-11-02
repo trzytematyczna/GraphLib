@@ -172,6 +172,13 @@ public class ListGraphTest {
 		}			
 		
 	}
+	
+@Test
+	
+	public void suma(){
+//		assertEquals(4790, this.graph.weightCount());
+		assertEquals(163, this.graph.weightCount());
+	}
 }
 
 

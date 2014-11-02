@@ -108,6 +108,12 @@ public class MGraphTest {
 		assertEquals(true, this.graph.areNeigbours(new Vertex(8), new Vertex(20)));
 		assertEquals(false, this.graph.areNeigbours(new Vertex(8), new Vertex(10)));
 	}
+	
+	@Test
+	
+	public void weightContTest(){
+		assertEquals(163, this.graph.weightCount());
+	}
 
 }
 
