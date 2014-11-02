@@ -4,6 +4,7 @@ import files.EntryFile;
 import graph.Edge;
 import graph.Vertex;
 
+import java.awt.List;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -103,14 +104,20 @@ public class ListGraph implements Graph {
 		return false;
 	}
 	@Override
-	public boolean deleteVertex(Vertex vertex) {
-		if(!isVertexExists(vertex, this.vertices)){
+	public boolean deleteVertex(Vertex vertexToerase) {
+		if(isVertexExists(vertexToerase, this.vertices)){
 			for(int i=0; i<this.vertices.length; i++){
 				if(this.vertices[i]!=null){
-					if(this.vertices[i].vertex.isEqual(vertex)){
-						this.vertices[i].vertex = null;
-						this.vertices[i].begin = null;
-						this.vertices[i].end = null;
+					if(this.vertices[i].vertex.isEqual(vertexToerase)){
+						for(Element begEl : this.vertices[i].begin){
+							deleteEdge(vertexToerase, begEl.ver);
+						}
+						for(Element endEl : this.vertices[i].end){
+							deleteEdge(endEl.ver, vertexToerase);
+						}
+						
+						this.vertices[i] = null;
+						return true;
 					}
 				}
 			}
@@ -158,14 +165,45 @@ public class ListGraph implements Graph {
 
 	@Override
 	public LinkedList<Vertex> vertexNeighbours(Vertex vertex) {
-		// TODO Auto-generated method stub
-		return null;
+		LinkedList<Vertex> neighbours = new LinkedList<Vertex>();
+		if(isVertexExists(vertex, this.vertices)){
+			for(int i=0; i<this.vertices.length; i++){
+				if(this.vertices[i]!=null){
+					if(this.vertices[i].vertex.isEqual(vertex)){
+						for(Element begEl : this.vertices[i].begin){
+							neighbours.add(begEl.ver);
+						}
+						for(Element endEl : this.vertices[i].end){
+							neighbours.add(endEl.ver);
+						}
+						
+						this.vertices[i] = null;
+					}
+				}
+			}
+		}
+		return neighbours;
 	}
 
 	@Override
 	public LinkedList<Edge> incidentEdges(Vertex vertex) {
-		// TODO Auto-generated method stub
-		return null;
+		LinkedList<Edge> incident = new LinkedList<Edge>();
+		if(isVertexExists(vertex, this.vertices)){
+			for(int i=0; i<this.vertices.length; i++){
+				if(this.vertices[i]!=null){
+					if(this.vertices[i].vertex.isEqual(vertex)){
+						for(Element begEl : this.vertices[i].begin){
+							incident.add(begEl.edge);
+						}
+						for(Element endEl : this.vertices[i].end){
+							incident.add(endEl.edge);
+						}
+						this.vertices[i] = null;
+					}
+				}
+			}
+		}
+		return incident;
 	}
 
 	@Override
