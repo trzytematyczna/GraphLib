@@ -23,11 +23,11 @@ public class MGraphTest {
 		this.graph = new MGraph(fg.graphRead(path));
 	}
 	
-//	@Test
-//	public void deleteVertexTest() {
-//		this.graph.deleteVertex(new Vertex(16));
-//		assertEquals(3,this.graph.vertexCount());
-//	}
+	@Test
+	public void deleteVertexTest() {
+		this.graph.deleteVertex(new Vertex(16));
+		assertEquals(3,this.graph.vertexCount());
+	}
 	
 	@Test
 	public void addVertexTest(){

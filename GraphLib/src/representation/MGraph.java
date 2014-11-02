@@ -25,14 +25,14 @@ public class MGraph implements Graph{
 		for(int i=0; i<list.size();i++){
 			inVer = new Vertex(list.get(i).getInVertex());
 			outVer = new Vertex(list.get(i).getOutVertex());
-//			addVertex(inVer);
-//			addVertex(outVer);
-			if(!isVertexExists(inVer, this.hashVertices)){
-				this.hashVertices.put(inVer, indexV++);
-			}
-			if(!isVertexExists(outVer, this.hashVertices)){
-				this.hashVertices.put(outVer, indexV++);
-			}
+			addVertex(inVer);
+			addVertex(outVer);
+//			if(!isVertexExists(inVer, this.hashVertices)){
+//				this.hashVertices.put(inVer, indexV++);
+//			}
+//			if(!isVertexExists(outVer, this.hashVertices)){
+//				this.hashVertices.put(outVer, indexV++);
+//			}
 		}
 		
 		for(int i=0; i<list.size();i++){
