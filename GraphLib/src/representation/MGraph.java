@@ -99,11 +99,9 @@ public class MGraph implements Graph{
 			this.matrix = enlargeMatrix(this.matrix);
 			int position = this.hashVertices.size();
 			this.hashVertices.put(vertex, position);
-//			putInAllRowAndCol(position, -1);
 		}
 		else{ //there is space to put new vertex
 			this.hashVertices.put(vertex, space);
-//			putInAllRowAndCol(space, -1);	
 		}
 		return true;
 	}
@@ -159,9 +157,6 @@ public class MGraph implements Graph{
 	private int freeSpace() {
 		for(int i=0; i<this.matrix.length; i++){
 			if(getVertexFromValue(i) == null) return i;
-//			for(int j=0; j<this.matrix.length; j++){
-//					if(this.matrix[i][j] == null) return i;
-//			}
 		}
 		return -1;
 	}
@@ -200,11 +195,9 @@ public class MGraph implements Graph{
 		if(isVertexExists(vertex, this.hashVertices)){
 			int position = getVertexValue(vertex.getName());
 			for(int i=0; i<this.matrix.length; i++){
-//				if(this.matrix[position][i].getWeight() != -1 && this.matrix[position][i] != null)  {
 				if(this.matrix[position][i] != null)  {
 					neighbours.add(getVertexFromValue(i));
 				}
-//				if(this.matrix[i][position].getWeight() != -1 && this.matrix[i][position] != null){
 				if(this.matrix[i][position] != null)  {
 					neighbours.add(getVertexFromValue(i));					
 				}
@@ -220,11 +213,9 @@ public class MGraph implements Graph{
 		if(isVertexExists(vertex, this.hashVertices)){
 			int position = getVertexValue(vertex.getName());
 			for(int i=0; i<this.matrix.length; i++){
-//				if(this.matrix[position][i].getWeight() != -1 && this.matrix[position][i] != null)  {
 				if(this.matrix[position][i] != null)  {
 					incident.add(this.matrix[position][i]);
 				}
-//				if(this.matrix[i][position].getWeight() != -1 && this.matrix[i][position] != null){
 				if(this.matrix[i][position] != null){
 					incident.add(this.matrix[i][position]);
 				}
@@ -245,7 +236,6 @@ public class MGraph implements Graph{
 		for (int i = 0; i < this.matrix.length; i++){
 			for (int j = 0; j < this.matrix.length; j++){
 				if(this.matrix[i][j]!=null){
-//					if (this.matrix[i][j].getWeight() != -1 && this.matrix[i][j] != null ) 
 						count++;
 				}
 			}
@@ -256,8 +246,6 @@ public class MGraph implements Graph{
 	@Override
 	public boolean areNeigbours(Vertex v1, Vertex v2) {
 		if(isVertexExists(v1, this.hashVertices) && isVertexExists(v2, this.hashVertices)){
-//			if(this.matrix[getVertexValue(v1.getName())][getVertexValue(v2.getName())].getWeight()!=-1 &&
-//					this.matrix[getVertexValue(v1.getName())][getVertexValue(v2.getName())]!= null){
 			if(this.matrix[getVertexValue(v1.getName())][getVertexValue(v2.getName())]!= null ||
 					this.matrix[getVertexValue(v2.getName())][getVertexValue(v1.getName())]!= null ){
 				return true;
