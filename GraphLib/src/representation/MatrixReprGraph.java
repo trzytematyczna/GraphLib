@@ -230,7 +230,6 @@ public class MatrixReprGraph implements Graph{
 	
 	public Edge getEdge(Vertex v1, Vertex v2) {
 		if(this.hashVertices.containsKey(v1) && this.hashVertices.containsKey(v2)) {
-			
 			if(this.matrix[this.hashVertices.get(v1)][this.hashVertices.get(v2)]!=null){
 				return this.matrix[this.hashVertices.get(v1)][this.hashVertices.get(v2)];
 			}

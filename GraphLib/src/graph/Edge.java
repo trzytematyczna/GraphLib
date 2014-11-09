@@ -2,6 +2,38 @@ package graph;
 
 public class Edge {
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + weight;
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Edge)) {
+			return false;
+		}
+		Edge other = (Edge) obj;
+		if (weight != other.weight) {
+			return false;
+		}
+		return true;
+	}
+
 	int weight;
 	
 	public Edge(int weight){
