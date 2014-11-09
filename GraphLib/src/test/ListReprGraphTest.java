@@ -7,19 +7,19 @@ import java.util.LinkedList;
 import org.junit.Before;
 import org.junit.Test;
 
-import representation.ListGraph;
+import representation.ListReprGraph;
 import files.FileGraph;
 import graph.Edge;
 import graph.Vertex;
 
-public class ListGraphTest {
-	ListGraph graph;
+public class ListReprGraphTest {
+	ListReprGraph graph;
 	
 	@Before
 	public void init(){
 		FileGraph fg = new FileGraph();
 		String path = "C:\\Users\\moni\\Documents\\agh\\IXsem\\algo\\graf2.txt";
-		this.graph = new ListGraph(fg.graphRead(path));
+		this.graph = new ListReprGraph(fg.graphRead(path));
 	}
 	
 	@Test
@@ -81,7 +81,7 @@ public class ListGraphTest {
 		for(int i=0; i<neighbours1.size(); i++){
 			for(Vertex v : newList){
 				 if(neighbours1.get(i).getName() == v.getName()){
-					 assertEquals(true, neighbours1.get(i).isEqual(v));
+					 assertEquals(true, neighbours1.get(i).equals(v));
 				 }
 			}
 		}		
@@ -92,7 +92,7 @@ public class ListGraphTest {
 		for(int i=0; i<neighbours2.size(); i++){
 			for(Vertex v : newList){
 				 if(neighbours2.get(i).getName() == v.getName()){
-					 assertEquals(true, neighbours2.get(i).isEqual(v));
+					 assertEquals(true, neighbours2.get(i).equals(v));
 				 }
 			}
 		}		
@@ -102,7 +102,7 @@ public class ListGraphTest {
 		for(int i=0; i<neighbours2.size(); i++){
 			for(Vertex v : newList){
 				 if(neighbours2.get(i).getName() == v.getName()){
-					 assertEquals(true, neighbours2.get(i).isEqual(v));
+					 assertEquals(true, neighbours2.get(i).equals(v));
 				 }
 			}
 		}	
@@ -112,7 +112,7 @@ public class ListGraphTest {
 		for(int i=0; i<neighbours1.size(); i++){
 			for(Vertex v : newList){
 				 if(neighbours1.get(i).getName() == v.getName()){
-					 assertEquals(true, neighbours1.get(i).isEqual(v));
+					 assertEquals(true, neighbours1.get(i).equals(v));
 				 }
 			}
 		}
@@ -132,8 +132,8 @@ public class ListGraphTest {
 		
 		for(int i=0; i<neighbours1.size(); i++){
 			for(Edge v : newList){
-				 if(neighbours1.get(i).isEqual(v)){
-					 assertEquals(true, neighbours1.get(i).isEqual(v));
+				 if(neighbours1.get(i).equals(v)){
+					 assertEquals(true, neighbours1.get(i).equals(v));
 				 }
 			}
 		}		
@@ -143,8 +143,8 @@ public class ListGraphTest {
 		newList = this.graph.incidentEdges(new Vertex(1));
 		for(int i=0; i<neighbours2.size(); i++){
 			for(Edge v : newList){
-				 if(neighbours2.get(i).isEqual(v)){
-					 assertEquals(true, neighbours2.get(i).isEqual(v));
+				 if(neighbours2.get(i).equals(v)){
+					 assertEquals(true, neighbours2.get(i).equals(v));
 				 }
 			}
 		}			
@@ -154,8 +154,8 @@ public class ListGraphTest {
 		newList = this.graph.incidentEdges(new Vertex(1));
 		for(int i=0; i<neighbours2.size(); i++){
 			for(Edge v : newList){
-				 if(neighbours2.get(i).isEqual(v)){
-					 assertEquals(true, neighbours2.get(i).isEqual(v));
+				 if(neighbours2.get(i).equals(v)){
+					 assertEquals(true, neighbours2.get(i).equals(v));
 				 }
 			}
 		}				
@@ -165,8 +165,8 @@ public class ListGraphTest {
 
 		for(int i=0; i<neighbours2.size(); i++){
 			for(Edge v : newList){
-				 if(neighbours2.get(i).isEqual(v)){
-					 assertEquals(true, neighbours2.get(i).isEqual(v));
+				 if(neighbours2.get(i).equals(v)){
+					 assertEquals(true, neighbours2.get(i).equals(v));
 				 }
 			}
 		}			

@@ -1,4 +1,4 @@
-package representation;
+package old;
 
 import files.EntryFile;
 import graph.Edge;
@@ -7,17 +7,18 @@ import graph.Vertex;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-public class MGraph2 implements Graph{
-	
+import representation.Graph;
 
+public class MGraph implements Graph{
+	
 	public Edge[][] matrix;
 	
 	public HashMap<Vertex, Integer> hashVertices;
 	
-	
-	public MGraph2(LinkedList<EntryFile> list) {
+	public MGraph(LinkedList<EntryFile> list) {
 		Vertex inVer;
 		Vertex outVer;
+		int indexV = 0;
 		this.hashVertices= new HashMap<Vertex, Integer>();
 
 		int size = preprocess(list);
@@ -34,38 +35,38 @@ public class MGraph2 implements Graph{
 			addEdge(new Edge (list.get(i).getEdge()), new Vertex(list.get(i).getInVertex()), new Vertex(list.get(i).getOutVertex())); 
 		}
 	}
-//	public boolean isVertexExists(Vertex vertex, HashMap<Vertex, Integer> haszmap){
-//		for(Vertex v : haszmap.keySet()){
-//			if(vertex.isEqual(v)){
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
+	public boolean isVertexExists(Vertex vertex, HashMap<Vertex, Integer> haszmap){
+		for(Vertex v : haszmap.keySet()){
+			if(vertex.isEqual(v)){
+				return true;
+			}
+		}
+		return false;
+	}
 	/**
 	 * 
 	 * @param name -integer form vertex.getName()
 	 * @return 
 	 */
-//	public Integer getVertexValue(int name){
-//		int foundValue = -1;
-//		for(Vertex v : this.hashVertices.keySet()){
-//			if(v.getName() == name){
-//				foundValue = this.hashVertices.get(v);
-//			}
-//		}
-//		return foundValue;
-//	}
+	public Integer getVertexValue(int name){
+		int foundValue = -1;
+		for(Vertex v : this.hashVertices.keySet()){
+			if(v.getName() == name){
+				foundValue = this.hashVertices.get(v);
+			}
+		}
+		return foundValue;
+	}
 	
-//	public Vertex getVertexFromName(int name){
-//		Vertex foundValue = null;
-//		for(Vertex v : this.hashVertices.keySet()){
-//			if(v.getName() == name){
-//				foundValue = v;
-//			}
-//		}
-//		return foundValue;
-//	}
+	public Vertex getVertexFromName(int name){
+		Vertex foundValue = null;
+		for(Vertex v : this.hashVertices.keySet()){
+			if(v.getName() == name){
+				foundValue = v;
+			}
+		}
+		return foundValue;
+	}
 	public Vertex getVertexFromValue(int value){
 		Vertex foundValue = null;
 		for(Vertex v : this.hashVertices.keySet()){
@@ -87,7 +88,7 @@ public class MGraph2 implements Graph{
 	
 	
 	public boolean addVertex(Vertex vertex) {
-		if(this.hashVertices.containsKey(vertex)) return false;
+		if(isVertexExists(vertex, this.hashVertices)) return false;
 		int space = freeSpace();
 		if( space == -1){
 			this.matrix = enlargeMatrix(this.matrix);
@@ -101,6 +102,7 @@ public class MGraph2 implements Graph{
 	}
 
 	private Edge[][] enlargeMatrix(Edge[][] matrix2) {
+		// TODO Auto-generated method stub
 		int current_size = matrix2.length;
 		int new_size = current_size+50;
 		Edge [][] newMatrix = new Edge [new_size][new_size];
@@ -123,6 +125,18 @@ public class MGraph2 implements Graph{
 		}
 		return newMatrix;
 	}
+	/**
+	 * 
+	 * @param position position of column and row to put there some new Edge with some value
+	 * @param what value of edge (-1 - vertex exists with no edges
+	 */
+	private void putInAllRowAndCol(int position, int what) {
+		for(int i=0; i<this.matrix.length; i++){
+			this.matrix[position][i] = new Edge(what);
+			this.matrix[i][position] = new Edge(what);
+		}
+		
+	}
 	
 	private void putNullInAllRowAndCol(int position) {
 		for(int i=0; i<this.matrix.length; i++){
@@ -137,9 +151,7 @@ public class MGraph2 implements Graph{
 	 */
 	private int freeSpace() {
 		for(int i=0; i<this.matrix.length; i++){
-//			if (this.hashVertices.containsValue(i)) return i;
 			if(getVertexFromValue(i) == null) return i;
-//			if(this.hashVertices.) return i;
 		}
 		return -1;
 	}
@@ -147,30 +159,27 @@ public class MGraph2 implements Graph{
 	@Override
 	public boolean deleteVertex(Vertex vertex) {
 				
-		if(!this.hashVertices.containsKey(vertex)) return false;
+		if(!isVertexExists(vertex, this.hashVertices)) return false;
 		
-//			putNullInAllRowAndCol(getVertexValue(vertex.getName()));
-			putNullInAllRowAndCol(this.hashVertices.get(vertex));
-//			Vertex v =getVertexFromName(vertex.getName());
-			this.hashVertices.remove(vertex);
+			putNullInAllRowAndCol(getVertexValue(vertex.getName()));
+			Vertex v =getVertexFromName(vertex.getName());
+			this.hashVertices.remove(v);
 		
 		return true;
 	}
 
 	@Override
 	public boolean addEdge(Edge edge, Vertex v1, Vertex v2) {
-		if(!this.hashVertices.containsKey(v1)|| !this.hashVertices.containsKey(v2)) return false;
+		if(!isVertexExists(v1, this.hashVertices) || !isVertexExists(v2, this.hashVertices)) return false;
 		
-//		this.matrix[getVertexValue(v1.getName())][getVertexValue(v2.getName())] = edge;
-		this.matrix[this.hashVertices.get(v1)][this.hashVertices.get(v2)] = edge;
+		this.matrix[getVertexValue(v1.getName())][getVertexValue(v2.getName())] = edge;
 		return true;
 	}
 
 	@Override
 	public boolean deleteEdge(Vertex in, Vertex out) {
-		if(!this.hashVertices.containsKey(in)|| !this.hashVertices.containsKey(out)) return false;
-//		this.matrix[getVertexValue(in.getName())][this.hashVertices.get(v1)] = null;//new Edge(-1);
-		this.matrix[this.hashVertices.get(in)][this.hashVertices.get(out)] = null;
+		if(!isVertexExists(in, this.hashVertices) || !isVertexExists(out, this.hashVertices)) return false;
+		this.matrix[getVertexValue(in.getName())][getVertexValue(out.getName())] = null;//new Edge(-1);
 		return false;
 	}
 
@@ -178,8 +187,8 @@ public class MGraph2 implements Graph{
 	public LinkedList<Vertex> vertexNeighbours(Vertex vertex) {
 		LinkedList<Vertex> neighbours = new LinkedList<Vertex>();
 		
-		if(this.hashVertices.containsKey(vertex)){
-			int position = this.hashVertices.get(vertex);//getVertexValue(vertex.getName());
+		if(isVertexExists(vertex, this.hashVertices)){
+			int position = getVertexValue(vertex.getName());
 			for(int i=0; i<this.matrix.length; i++){
 				if(this.matrix[position][i] != null)  {
 					neighbours.add(getVertexFromValue(i));
@@ -196,8 +205,8 @@ public class MGraph2 implements Graph{
 	@Override
 	public LinkedList<Edge> incidentEdges(Vertex vertex) {
 		LinkedList<Edge> incident = new LinkedList<Edge>();
-		if(this.hashVertices.containsKey(vertex)){
-			int position = this.hashVertices.get(vertex);//getVertexValue(vertex.getName());
+		if(isVertexExists(vertex, this.hashVertices)){
+			int position = getVertexValue(vertex.getName());
 			for(int i=0; i<this.matrix.length; i++){
 				if(this.matrix[position][i] != null)  {
 					incident.add(this.matrix[position][i]);
@@ -231,12 +240,9 @@ public class MGraph2 implements Graph{
 
 	@Override
 	public boolean areNeigbours(Vertex v1, Vertex v2) {
-		if(this.hashVertices.containsKey(v1) && this.hashVertices.containsKey(v2)) {
-		
-//			if(this.matrix[getVertexValue(v1.getName())][getVertexValue(v2.getName())]!= null ||
-//					this.matrix[getVertexValue(v2.getName())][getVertexValue(v1.getName())]!= null ){
-			if(this.matrix[this.hashVertices.get(v1)][this.hashVertices.get(v2)]!=null ||
-					this.matrix[this.hashVertices.get(v2)][this.hashVertices.get(v1)]!=null ){
+		if(isVertexExists(v1, this.hashVertices) && isVertexExists(v2, this.hashVertices)){
+			if(this.matrix[getVertexValue(v1.getName())][getVertexValue(v2.getName())]!= null ||
+					this.matrix[getVertexValue(v2.getName())][getVertexValue(v1.getName())]!= null ){
 				return true;
 			}
 		}
@@ -244,9 +250,8 @@ public class MGraph2 implements Graph{
 	}
 	
 	public boolean areNeigboursOneSided(Vertex v1, Vertex v2) {
-		if(this.hashVertices.containsKey(v1) && this.hashVertices.containsKey(v2)){
-			if(this.matrix[this.hashVertices.get(v1)][this.hashVertices.get(v2)]!=null){
-//			if(this.matrix[getVertexValue(v1.getName())][getVertexValue(v2.getName())]!= null ){
+		if(isVertexExists(v1, this.hashVertices) && isVertexExists(v2, this.hashVertices)){
+			if(this.matrix[getVertexValue(v1.getName())][getVertexValue(v2.getName())]!= null ){
 				return true;
 			}
 		}
@@ -254,13 +259,10 @@ public class MGraph2 implements Graph{
 	}
 	
 	public Edge getEdge(Vertex v1, Vertex v2) {
-		if(this.hashVertices.containsKey(v1) && this.hashVertices.containsKey(v2)) {
-			
-//			if(this.matrix[getVertexValue(v1.getName())][getVertexValue(v2.getName())]!= null ||
-//					this.matrix[getVertexValue(v2.getName())][getVertexValue(v1.getName())]!= null ){
-			if(this.matrix[this.hashVertices.get(v1)][this.hashVertices.get(v2)]!=null){
-//				return this.matrix[getVertexValue(v1.getName())][getVertexValue(v2.getName())];
-				return this.matrix[this.hashVertices.get(v1)][this.hashVertices.get(v2)];
+		if(isVertexExists(v1, this.hashVertices) && isVertexExists(v2, this.hashVertices)){
+			if(this.matrix[getVertexValue(v1.getName())][getVertexValue(v2.getName())]!= null ||
+					this.matrix[getVertexValue(v2.getName())][getVertexValue(v1.getName())]!= null ){
+				return this.matrix[getVertexValue(v1.getName())][getVertexValue(v2.getName())];
 			}
 		}
 		return null;

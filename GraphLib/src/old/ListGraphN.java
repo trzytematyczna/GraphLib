@@ -1,16 +1,17 @@
-package representation;
+package old;
 
 import files.EntryFile;
 import graph.Edge;
 import graph.Vertex;
 
-import java.awt.List;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import representation.Graph;
 
-public class ListGraph implements Graph {
+
+public class ListGraphN implements Graph {
 
 	/**
 	 * Element - structure that has info about Edge and corresponding vertex (ending/beggining depending on
@@ -48,7 +49,7 @@ public class ListGraph implements Graph {
 	
 	listRep[] vertices;
 	
-	public ListGraph(LinkedList<EntryFile> list) {
+	public ListGraphN(LinkedList<EntryFile> list) {
 		Vertex inVer;
 		Vertex outVer;
 		Edge newEdge;
@@ -76,8 +77,8 @@ public class ListGraph implements Graph {
 				this.vertices = enlargeMatrix(this.vertices);
 				space = freeSpace();
 			}
-			this.vertices[space] = new listRep(vertex, new LinkedList<ListGraph.Element>(), 
-					new LinkedList<ListGraph.Element>());
+			this.vertices[space] = new listRep(vertex, new LinkedList<ListGraphN.Element>(), 
+					new LinkedList<ListGraphN.Element>());
 			return true;
 		}
 		return false;
@@ -102,20 +103,14 @@ public class ListGraph implements Graph {
 		return false;
 	}
 	@Override
-	public boolean deleteVertex(Vertex vertexToerase) {
-		if(isVertexExists(vertexToerase, this.vertices)){
+	public boolean deleteVertex(Vertex vertex) {
+		if(!isVertexExists(vertex, this.vertices)){
 			for(int i=0; i<this.vertices.length; i++){
 				if(this.vertices[i]!=null){
-					if(this.vertices[i].vertex.isEqual(vertexToerase)){
-						for(Element begEl : this.vertices[i].begin){
-							deleteEdge(vertexToerase, begEl.ver);
-						}
-						for(Element endEl : this.vertices[i].end){
-							deleteEdge(endEl.ver, vertexToerase);
-						}
-						
-						this.vertices[i] = null;
-						return true;
+					if(this.vertices[i].vertex.isEqual(vertex)){
+						this.vertices[i].vertex = null;
+						this.vertices[i].begin = null;
+						this.vertices[i].end = null;
 					}
 				}
 			}
@@ -142,66 +137,21 @@ public class ListGraph implements Graph {
 	}
 
 	@Override
-	public boolean deleteEdge(Vertex inVer, Vertex outVer) {
-		if(!isVertexExists(inVer, this.vertices) || !isVertexExists(outVer, this.vertices)) return false;
-		for(int i =0; i< this.vertices.length; i++){
-			if(this.vertices[i]!=null){
-				if(this.vertices[i].vertex.isEqual(inVer)){
-					for(Element e: this.vertices[i].begin){
-						this.vertices[i].begin.remove(e);
-					}
-				}
-				if(this.vertices[i].vertex.isEqual(outVer)){
-					for(Element e: this.vertices[i].end){
-						this.vertices[i].end.remove(e);
-					}				
-				}
-			}
-		}
-		return true;
+	public boolean deleteEdge(Vertex v1, Vertex v2) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
 	public LinkedList<Vertex> vertexNeighbours(Vertex vertex) {
-		LinkedList<Vertex> neighbours = new LinkedList<Vertex>();
-		if(isVertexExists(vertex, this.vertices)){
-			for(int i=0; i<this.vertices.length; i++){
-				if(this.vertices[i]!=null){
-					if(this.vertices[i].vertex.isEqual(vertex)){
-						for(Element begEl : this.vertices[i].begin){
-							neighbours.add(begEl.ver);
-						}
-						for(Element endEl : this.vertices[i].end){
-							neighbours.add(endEl.ver);
-						}
-						
-						this.vertices[i] = null;
-					}
-				}
-			}
-		}
-		return neighbours;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public LinkedList<Edge> incidentEdges(Vertex vertex) {
-		LinkedList<Edge> incident = new LinkedList<Edge>();
-		if(isVertexExists(vertex, this.vertices)){
-			for(int i=0; i<this.vertices.length; i++){
-				if(this.vertices[i]!=null){
-					if(this.vertices[i].vertex.isEqual(vertex)){
-						for(Element begEl : this.vertices[i].begin){
-							incident.add(begEl.edge);
-						}
-						for(Element endEl : this.vertices[i].end){
-							incident.add(endEl.edge);
-						}
-						this.vertices[i] = null;
-					}
-				}
-			}
-		}
-		return incident;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -218,10 +168,9 @@ public class ListGraph implements Graph {
 		int count = 0;
 		for(int i = 0 ; i<this.vertices.length;i++){
 			if(this.vertices[i] != null ) {
-					count+=this.vertices[i].begin.size();
-//					for(Element e : this.vertices[i].begin){
-//						if(this.vertices[i].vertex.getName()<e.ver.getName())count+=e.edge.getWeight();
-//					}
+				for(int j=0; j<this.vertices[i].begin.size(); j++){
+					count++;
+				}
 			}
 		}
 		return count;
@@ -229,20 +178,7 @@ public class ListGraph implements Graph {
 
 	@Override
 	public boolean areNeigbours(Vertex v1, Vertex v2) {
-		if(isVertexExists(v1, this.vertices) && isVertexExists(v2, this.vertices)){
-			for(int i =0; i< this.vertices.length; i++){
-				if(this.vertices[i]!=null){
-					if(this.vertices[i].vertex.isEqual(v1)){
-						for(Element e: this.vertices[i].begin){
-							if(e.ver.isEqual(v2)) return true;
-						}
-						for(Element e: this.vertices[i].end){
-							if(e.ver.isEqual(v2)) return true;
-						}
-					}
-				}
-			}
-		}
+		// TODO Auto-generated method stub
 		return false;
 	}
 	
@@ -261,15 +197,5 @@ public class ListGraph implements Graph {
 		return values.size();
 	}
 
-	public int weightCount() {
-		int count = 0;
-		for(int i = 0 ; i<this.vertices.length;i++){
-			if(this.vertices[i] != null ) {
-					for(Element e : this.vertices[i].begin){
-						if(this.vertices[i].vertex.getName()<e.ver.getName())count+=e.edge.getWeight();
-					}
-			}
-		}
-		return count;
-	}
+
 }

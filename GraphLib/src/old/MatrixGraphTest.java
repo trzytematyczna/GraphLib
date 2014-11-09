@@ -1,4 +1,4 @@
-package test;
+package old;
 
 import static org.junit.Assert.*;
 
@@ -10,8 +10,6 @@ import graph.Vertex;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import representation.MatrixGraph;
 
 public class MatrixGraphTest {
 

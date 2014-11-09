@@ -1,10 +1,11 @@
-package representation;
+package old;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
+import representation.Graph;
 import files.EntryFile;
 import graph.Edge;
 import graph.Vertex;

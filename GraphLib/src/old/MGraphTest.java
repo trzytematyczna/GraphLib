@@ -1,4 +1,4 @@
-package test;
+package old;
 
 import static org.junit.Assert.*;
 
@@ -10,7 +10,6 @@ import org.junit.Test;
 import files.FileGraph;
 import graph.Edge;
 import graph.Vertex;
-import representation.MGraph;
 
 public class MGraphTest {
 

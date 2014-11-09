@@ -10,18 +10,17 @@ import org.junit.Test;
 import files.FileGraph;
 import graph.Edge;
 import graph.Vertex;
-import representation.MGraph;
-import representation.MGraph2;
+import representation.MatrixReprGraph;
 
-public class MGraph2Test {
+public class MatrixReprGraphTest {
 
-	MGraph2 graph;
+	MatrixReprGraph graph;
 	
 	@Before
 	public void init(){
 		FileGraph fg = new FileGraph();
 		String path = "C:\\Users\\moni\\Documents\\agh\\IXsem\\algo\\graf2.txt";
-		this.graph = new MGraph2(fg.graphRead(path));
+		this.graph = new MatrixReprGraph(fg.graphRead(path));
 	}
 	
 	@Test
@@ -78,7 +77,7 @@ public class MGraph2Test {
 		for(int i=0; i<neigh.size(); i++){
 			for(Vertex v : vertex){
 				 if(neigh.get(i).getName() == v.getName()){
-					 assertEquals(true, neigh.get(i).isEqual(v));
+					 assertEquals(true, neigh.get(i).equals(v));
 				 }
 			}
 		}
