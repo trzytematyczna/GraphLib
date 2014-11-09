@@ -3,20 +3,20 @@ package algorithms;
 import representation.MatrixReprGraph;
 import graph.Vertex;
 
-public class WarshalFloydMatrix {
+public class WarshallFloydMatrix {
 
 	public int[][] distances;
 	public Vertex[][] previous;
 	public int infinity = Integer.MAX_VALUE;
 //	public int infinity = -1;
 	
-	public WarshalFloydMatrix(int size){
+	public WarshallFloydMatrix(int size){
 		this.distances = new int[size][size];
 		this.previous = new Vertex[size][size];
 	}
-	public void go(MatrixReprGraph graph){
+	public long go(MatrixReprGraph graph){
 		long start=System.currentTimeMillis();
-		System.out.println(start);
+//		System.out.println(start);
 		for(Vertex v1 : graph.hashVertices.keySet()){
 			int index1 = graph.hashVertices.get(v1);
 			for(Vertex v2 : graph.hashVertices.keySet()){
@@ -53,6 +53,12 @@ public class WarshalFloydMatrix {
 			
 		}
 		long end=System.currentTimeMillis() - start;
-		System.out.println((double)end/(double)1000);
+		return end;
 	}
+	
+	public Vertex getPrevious(MatrixReprGraph graph, Vertex source, Vertex between) {
+		if(!graph.hashVertices.containsKey(source) && !graph.hashVertices.containsKey(between)) return null;
+		return this.previous[graph.hashVertices.get(source)][graph.hashVertices.get(between)];
+	}
+
 }

@@ -14,9 +14,9 @@ public class WarshallFloydList {
 		this.distances = new int[size][size];
 		this.previous = new Vertex[size][size];
 	}
-	public void go(ListReprGraph graph){
+	public long go(ListReprGraph graph){
 		long start=System.currentTimeMillis();
-		System.out.println(start);
+//		System.out.println(start);
 		for(int i = 0; i < graph.vertices.length; i++){
 			for(int j = 0; j < graph.vertices.length; j++){
 				if(i == j) {
@@ -45,6 +45,10 @@ public class WarshallFloydList {
 			}
 		}
 			long end=System.currentTimeMillis() - start;
-			System.out.println((double)end/(double)1000);
+			return end;
+	}
+	public Vertex getPrevious(ListReprGraph graph, Vertex source, Vertex between) {
+		if(graph.vertices[graph.getIndex(source)]==null && graph.vertices[graph.getIndex(between)]==null) return null;
+		return this.previous[graph.getIndex(source)][graph.getIndex(between)];
 	}
 }
