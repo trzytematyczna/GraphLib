@@ -18,6 +18,7 @@ public class WarshalFloydRest {
 	public void init(){
 		FileGraph fg = new FileGraph();
 		String path = "C:\\Users\\moni\\Documents\\agh\\IXsem\\algo\\duzy_graf_3.txt";
+//		String path = "C:\\Users\\moni\\Documents\\agh\\IXsem\\algo\\graf_testowy.txt";
 		this.graph = new MGraph2(fg.graphRead(path));
 	}
 	
@@ -29,7 +30,7 @@ public class WarshalFloydRest {
 		Vertex v2 = new Vertex(609);
 //		int index1 = graph.getVertexValue(v1.getName());
 //		int index2 = graph.getVertexValue(v2.getName());
-		assertEquals(18, wf.distances[graph.hashVertices.get(v1)][graph.hashVertices.get(v2)]);
+		assertEquals(55, wf.distances[graph.hashVertices.get(v1)][graph.hashVertices.get(v2)]);
 	}
 
 }
