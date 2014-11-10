@@ -15,13 +15,20 @@ public class ListReprGraph implements Graph {
 	 * @author mra
 	 *
 	 */
-	private class Element{
+	public class Element{
 		Edge edge;
 		Vertex ver;
 		
 		public Element(Edge edge, Vertex ver) {
 			this.edge = edge;
 			this.ver= ver;
+		}
+		
+		public Edge getEdge(){
+			return this.edge;
+		}
+		public Vertex getVertex(){
+			return this.ver;
 		}
 	}
 	

@@ -9,7 +9,7 @@ public class BellmanFordMatrix {
 	public Vertex[] previous;
 	public int[] distance;
 	public MatrixReprGraph graph;
-	int infinity = Integer.MAX_VALUE;
+	int infinity = 100000000;//Integer.MAX_VALUE;
 	
 	public BellmanFordMatrix(MatrixReprGraph graph, int size){
 		this.previous = new Vertex[size];

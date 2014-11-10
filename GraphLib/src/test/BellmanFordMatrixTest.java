@@ -6,14 +6,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import algorithms.BellmanFordMatrix;
-import representation.ListReprGraph;
 import representation.MatrixReprGraph;
 import files.FileGraph;
 import graph.Vertex;
 
 public class BellmanFordMatrixTest {
 	MatrixReprGraph matrix_graph;
-	ListReprGraph list_graph;
 	int vertices_count = 1000;
 //	int vertices_count = 13;
 
