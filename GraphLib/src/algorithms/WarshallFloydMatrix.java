@@ -7,14 +7,16 @@ public class WarshallFloydMatrix {
 
 	public int[][] distances;
 	public Vertex[][] previous;
+	public MatrixReprGraph graph;
 	public int infinity = Integer.MAX_VALUE;
 //	public int infinity = -1;
 	
-	public WarshallFloydMatrix(int size){
+	public WarshallFloydMatrix(MatrixReprGraph graph, int size){
 		this.distances = new int[size][size];
 		this.previous = new Vertex[size][size];
+		this.graph = graph;
 	}
-	public long go(MatrixReprGraph graph){
+	public long go(){
 		long start=System.currentTimeMillis();
 //		System.out.println(start);
 		for(Vertex v1 : graph.hashVertices.keySet()){
@@ -38,12 +40,12 @@ public class WarshallFloydMatrix {
 
 		for(Vertex u : graph.hashVertices.keySet()){
 			int indexU = graph.hashVertices.get(u);
-
 			for(Vertex v1 : graph.hashVertices.keySet()){
 				int index1 = graph.hashVertices.get(v1);
+				if(this.distances[index1][indexU] == this.infinity) continue;
 				for(Vertex v2 : graph.hashVertices.keySet()){
 					int index2 = graph.hashVertices.get(v2);
-					if(this.distances[index1][indexU] == this.infinity|| this.distances[indexU][index2] == this.infinity) continue;
+					if(/*this.distances[index1][indexU] == this.infinity|| */this.distances[indexU][index2] == this.infinity) continue;
 					if(this.distances[index1][index2]>this.distances[index1][indexU]+this.distances[indexU][index2]){
 						this.distances[index1][index2] = this.distances[index1][indexU] + distances[indexU][index2];
 						this.previous[index1][index2]=this.previous[indexU][index2];

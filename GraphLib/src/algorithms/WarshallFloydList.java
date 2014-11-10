@@ -7,14 +7,16 @@ public class WarshallFloydList {
 
 	public int[][] distances;
 	public Vertex[][] previous;
+	public ListReprGraph graph;
 	public int infinity = Integer.MAX_VALUE;
 	//		public int infinity = -1;
 	
-	public WarshallFloydList(int size){
+	public WarshallFloydList(ListReprGraph graph,int size){
 		this.distances = new int[size][size];
 		this.previous = new Vertex[size][size];
+		this.graph = graph;
 	}
-	public long go(ListReprGraph graph){
+	public long go(){
 		long start=System.currentTimeMillis();
 //		System.out.println(start);
 		for(int i = 0; i < graph.vertices.length; i++){
