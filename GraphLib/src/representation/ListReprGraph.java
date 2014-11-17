@@ -88,13 +88,22 @@ public class ListReprGraph implements Graph {
 		
 		this.vertices = new listRep[size];
 		
+		int indexV=0;
+		
 		for(int i=0; i<list.size();i++){
 			inVer = new Vertex(list.get(i).getInVertex());
 			outVer = new Vertex(list.get(i).getOutVertex());
 			newEdge = new Edge(list.get(i).getEdge());
-			
-			addVertex(inVer);
-			addVertex(outVer);
+//			addVertex(inVer);
+//			addVertex(outVer);
+			if(!isVertexExists(inVer, this.vertices)){
+				this.vertices[indexV++] = new listRep(inVer, new LinkedList<ListReprGraph.Element>(), 
+					new LinkedList<ListReprGraph.Element>());
+			}			
+			if(!isVertexExists(outVer, this.vertices)){
+				this.vertices[indexV++] = new listRep(outVer, new LinkedList<ListReprGraph.Element>(), 
+					new LinkedList<ListReprGraph.Element>());
+			}
 			addEdge(newEdge, inVer, outVer);
 		}
 	}

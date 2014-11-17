@@ -62,14 +62,14 @@ public class Run {
 		System.out.println("BellmanFord matrix distance 109 - 609 "+ mBF.distance[mBF.graph.hashVertices.get(v2)]);
 		path(mBF, v1, v2);
 		
-		BellmanFordList lBF= new BellmanFordList(list_graph, vertices_count);
-		long lTimeBF = lBF.go(v1);
-		System.out.println("BellmanFord List Time: "+(double)lTimeBF/(double)1000);
-		
-		System.out.println("BellmanFord list distance 109 - 609 "+  lBF.distance[lBF.graph.getIndex(v2)]);
-		path(lBF, v1, v2);
-		
-		System.out.println("BellmanFord R = listTime/matrixTime = "+(double)lTimeBF/(double)mTimeBF);
+//		BellmanFordList lBF= new BellmanFordList(list_graph, vertices_count);
+//		long lTimeBF = lBF.go(v1);
+//		System.out.println("BellmanFord List Time: "+(double)lTimeBF/(double)1000);
+//		
+//		System.out.println("BellmanFord list distance 109 - 609 "+  lBF.distance[lBF.graph.getIndex(v2)]);
+//		path(lBF, v1, v2);
+//		
+//		System.out.println("BellmanFord R = listTime/matrixTime = "+(double)lTimeBF/(double)mTimeBF);
 		/**/
 	}
 
@@ -99,6 +99,7 @@ public class Run {
 			between = bf.previous[bf.graph.getIndex(between)];//wf.getPrevious(source, between);this.previous[graph.getIndex(source)][graph.getIndex(between)];
 			System.out.print(between.getName()+" ");
 		}
+		System.out.println();
 	}
 	public static void path(BellmanFordMatrix bf, Vertex source, Vertex dest){
 		Vertex between = dest;
@@ -107,6 +108,7 @@ public class Run {
 			between = bf.previous[bf.graph.hashVertices.get(between)];//wf.getPrevious(source, between);
 			System.out.print(between.getName()+" ");
 		}
+		System.out.println();
 	}
 
 	
