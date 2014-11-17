@@ -9,14 +9,15 @@ public class BellmanFordMatrix {
 	public Vertex[] previous;
 	public int[] distance;
 	public MatrixReprGraph graph;
-	int infinity = 100000000;//Integer.MAX_VALUE;
+	int infinity = Integer.MAX_VALUE;//100000000;
 	
 	public BellmanFordMatrix(MatrixReprGraph graph, int size){
 		this.previous = new Vertex[size];
 		this.distance = new int [size];
 		this.graph = graph;
 	}
-	public void go(Vertex source){
+	public long go(Vertex source){
+		long mstart = System.currentTimeMillis();
 		for(Vertex vertex : graph.hashVertices.keySet()){
 			if(vertex.equals(source)){
 				distance[graph.hashVertices.get(vertex)] = 0;
@@ -29,6 +30,7 @@ public class BellmanFordMatrix {
 		int w = 0;
 		for(Vertex v : graph.hashVertices.keySet()){
 			for(Vertex v1 : graph.hashVertices.keySet()){
+				if(distance[graph.hashVertices.get(v1)] == this.infinity) continue;
 				for(Vertex v2 : graph.hashVertices.keySet()){
 					Edge e = graph.getEdge(v1, v2);
 					if(e!=null){
@@ -55,5 +57,6 @@ public class BellmanFordMatrix {
 //				}
 //			}
 //		}
+		return (System.currentTimeMillis() - mstart);
 	}
 }

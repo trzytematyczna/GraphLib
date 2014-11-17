@@ -37,8 +37,9 @@ public class WarshallFloydList {
 	
 		for(int u = 0; u < graph.vertices.length; u++){
 			for(int i = 0; i < graph.vertices.length; i++){
+				if(this.distances[i][u] == this.infinity) continue;
 				for(int j = 0; j < graph.vertices.length; j++){
-						if(this.distances[i][u] == this.infinity|| this.distances[u][j] == this.infinity) continue;
+						if(this.distances[u][j] == this.infinity) continue;
 						if(this.distances[i][j]>this.distances[i][u]+this.distances[u][j]){
 							this.distances[i][j] = this.distances[i][u] + distances[u][j];
 							this.previous[i][j]=this.previous[u][j];

@@ -11,7 +11,7 @@ public class BellmanFordList {
 	public Vertex[] previous;
 	public int[] distance;
 	public ListReprGraph graph;
-	int infinity = 100000000;//Integer.MAX_VALUE;
+	int infinity = Integer.MAX_VALUE; //100000000;
 //	LinkedList<Edge> edges;
 	
 	public BellmanFordList(ListReprGraph graph, int size){
@@ -20,7 +20,8 @@ public class BellmanFordList {
 		this.graph = graph;
 //		this.edges = this.getAllEdges();
 	}
-	public void go(Vertex source){
+	public long go(Vertex source){
+		long mstart = System.currentTimeMillis();
 		for(int i=0; i<graph.vertices.length; i++){
 			if(graph.vertices[i]!=null){
 				if(graph.vertices[i].getVertex().equals(source)){
@@ -34,18 +35,18 @@ public class BellmanFordList {
 		}
 		int w = 0;
 		for(int j=0; j<graph.vertices.length; j++){
-		for(int i=0; i<graph.vertices.length; i++){
-			if(graph.vertices[i]!=null){
-				if(distance[i] == this.infinity) continue;
-				for(Element elem : graph.vertices[i].getBeginList()){
-					w = elem.getEdge().getWeight();
-					if(distance[i] + w < distance[graph.getIndex(elem.getVertex())]){
-						distance[graph.getIndex(elem.getVertex())] = distance[i] + w;
-						previous[graph.getIndex(elem.getVertex())] = graph.vertices[i].getVertex();
+			for(int i=0; i<graph.vertices.length; i++){
+				if(graph.vertices[i]!=null){
+					if(distance[i] == this.infinity) continue;
+					for(Element elem : graph.vertices[i].getBeginList()){
+						w = elem.getEdge().getWeight();
+						if(distance[i] + w < distance[graph.getIndex(elem.getVertex())]){
+							distance[graph.getIndex(elem.getVertex())] = distance[i] + w;
+							previous[graph.getIndex(elem.getVertex())] = graph.vertices[i].getVertex();
+						}
 					}
 				}
 			}
-		}
 		}
 		//checking negative-weight cycles - off
 //		for(Vertex v : graph.hashVertices.keySet()){
@@ -61,6 +62,7 @@ public class BellmanFordList {
 //				}
 //			}
 //		}
+		return (System.currentTimeMillis() - mstart);
 	}
 	
 	public LinkedList<Edge> getAllEdges(){

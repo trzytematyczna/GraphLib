@@ -14,7 +14,6 @@ import java.util.regex.Pattern;
 public class FileGraph {
 	
 
-	public int graphSize;
 	
 	public LinkedList<EntryFile> graphRead(String path) {
 		BufferedReader br = null;
@@ -26,15 +25,11 @@ public class FileGraph {
  
 			br = new BufferedReader(new FileReader(path));
 			while ((sCurrentLine = br.readLine()) != null) {
-				sCurrentLine = sCurrentLine.replace(" ", "");
-//				System.out.println(sCurrentLine);
+//				sCurrentLine = sCurrentLine.replace(" ", "");
 				String [] s = sCurrentLine.split(";");
-				EntryFile entry = new EntryFile(Integer.parseInt(s[0]),Integer.parseInt(s[1]),Integer.parseInt(s[2]));
+				EntryFile entry = new EntryFile(Integer.parseInt(s[0].trim()),Integer.parseInt(s[1].trim()),Integer.parseInt(s[2].trim()));
 				list.add(entry);
-
-					
 			}
-		this.graphSize = list.size();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {

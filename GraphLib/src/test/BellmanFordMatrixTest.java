@@ -35,9 +35,9 @@ public class BellmanFordMatrixTest {
 		BellmanFordMatrix bf= new BellmanFordMatrix(matrix_graph, vertices_count);
 		Vertex v1 = new Vertex(109);
 		Vertex v2 = new Vertex(609);
-		long mstart = System.currentTimeMillis();
-		bf.go(v1);
-		long mend = System.currentTimeMillis() - mstart;
+//		long mstart = System.currentTimeMillis();
+		long mend = bf.go(v1);
+//		long mend = System.currentTimeMillis() - mstart;
 		System.out.println("BellmanFord Matrix Time: "+(double)mend/(double)1000);
 		
 		assertEquals(18, bf.distance[bf.graph.hashVertices.get(v2)]);
