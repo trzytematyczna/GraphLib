@@ -42,6 +42,7 @@ public class BellmanFordMatrixTest {
 		
 		assertEquals(18, bf.distance[bf.graph.hashVertices.get(v2)]);
 		vertexMatrixList(bf, v1, v2);
+		allDistancesFromVertex(v1, bf);
 	}
 	
 	
@@ -68,9 +69,12 @@ public class BellmanFordMatrixTest {
 	}
 	public void allDistancesFromVertex(Vertex source, BellmanFordMatrix bf){
 		System.out.println("From vertex "+source.getName());
+		int unavailable = 0;
 		for(int i = 0; i<bf.distance.length; i++){
+			if(bf.distance[i] == Integer.MAX_VALUE) unavailable++;
 			System.out.println("to vertex "+bf.graph.getVertexFromValue(i).getName()+" distance: "+bf.distance[i]);
 		}
+		System.out.println("unavailable: "+unavailable);
 	}
 
 }

@@ -40,9 +40,22 @@ public class MatrixReprGraph implements Graph{
 		
 		int indexV=0;
 		
-		for(int i=0; i<list.size();i++){
-			inVer = new Vertex(list.get(i).getInVertex());
-			outVer = new Vertex(list.get(i).getOutVertex());
+//		for(int i=0; i<list.size();i++){
+//			inVer = new Vertex(list.get(i).getInVertex());
+//			outVer = new Vertex(list.get(i).getOutVertex());
+////			addVertex(inVer);
+////			addVertex(outVer);
+//			if(!this.hashVertices.containsKey(inVer)){
+//				this.hashVertices.put(inVer, indexV++);
+//			}
+//			if(!this.hashVertices.containsKey(outVer)){
+//				this.hashVertices.put(outVer, indexV++);
+//			}
+//		}
+		
+		for(EntryFile entry : list){
+			inVer = new Vertex(entry.getInVertex());
+			outVer = new Vertex(entry.getOutVertex());
 //			addVertex(inVer);
 //			addVertex(outVer);
 			if(!this.hashVertices.containsKey(inVer)){
@@ -52,12 +65,11 @@ public class MatrixReprGraph implements Graph{
 				this.hashVertices.put(outVer, indexV++);
 			}
 		}
-		indexV = indexV;
-		
-		for(int i=0; i<list.size();i++){
-			if (i== 199755){}
+//		for(int i=0; i<list.size();i++){
+		for(EntryFile entry : list){
 //			this.matrix[this.hashVertices.get(list.get(i).getInVertex())][this.hashVertices.get(list.get(i).getOutVertex())] = new Edge (list.get(i).getEdge());
-			addEdge(new Edge (list.get(i).getEdge()), new Vertex(list.get(i).getInVertex()), new Vertex(list.get(i).getOutVertex())); 
+//			addEdge(new Edge (list.get(i).getEdge()), new Vertex(list.get(i).getInVertex()), new Vertex(list.get(i).getOutVertex())); 
+			addEdge(new Edge (entry.getEdge()), new Vertex(entry.getInVertex()), new Vertex(entry.getOutVertex())); 
 		}
 	}
 

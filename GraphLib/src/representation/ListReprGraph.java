@@ -41,12 +41,12 @@ public class ListReprGraph implements Graph {
 	public class listRep {
 		Vertex vertex;
 		LinkedList<Element> begin;
-		LinkedList<Element> end;
+//		LinkedList<Element> end;
 		
 		public listRep(Vertex v, LinkedList<Element> beg, LinkedList<Element> end) {
 			this.vertex=v;
 			this.begin = beg;
-			this.end = end;
+//			this.end = end;
 		}
 		
 		public Vertex getVertex(){
@@ -55,9 +55,9 @@ public class ListReprGraph implements Graph {
 		public LinkedList<Element> getBeginList(){
 			return this.begin;
 		}
-		public LinkedList<Element> getEndList(){
-			return this.end;
-		}
+//		public LinkedList<Element> getEndList(){
+//			return this.end;
+//		}
 	}
 	
 	public listRep[] vertices;
@@ -90,10 +90,26 @@ public class ListReprGraph implements Graph {
 		
 		int indexV=0;
 		
-		for(int i=0; i<list.size();i++){
-			inVer = new Vertex(list.get(i).getInVertex());
-			outVer = new Vertex(list.get(i).getOutVertex());
-			newEdge = new Edge(list.get(i).getEdge());
+//		for(int i=0; i<list.size();i++){
+//			inVer = new Vertex(list.get(i).getInVertex());
+//			outVer = new Vertex(list.get(i).getOutVertex());
+//			newEdge = new Edge(list.get(i).getEdge());
+////			addVertex(inVer);
+////			addVertex(outVer);
+//			if(!isVertexExists(inVer, this.vertices)){
+//				this.vertices[indexV++] = new listRep(inVer, new LinkedList<ListReprGraph.Element>(), 
+//					new LinkedList<ListReprGraph.Element>());
+//			}			
+//			if(!isVertexExists(outVer, this.vertices)){
+//				this.vertices[indexV++] = new listRep(outVer, new LinkedList<ListReprGraph.Element>(), 
+//					new LinkedList<ListReprGraph.Element>());
+//			}
+//			addEdge(newEdge, inVer, outVer);
+//		}
+		for(EntryFile entry : list){
+			inVer = new Vertex(entry.getInVertex());
+			outVer = new Vertex(entry.getOutVertex());
+			newEdge = new Edge(entry.getEdge());
 //			addVertex(inVer);
 //			addVertex(outVer);
 			if(!isVertexExists(inVer, this.vertices)){
@@ -151,9 +167,9 @@ public class ListReprGraph implements Graph {
 						for(Element begEl : this.vertices[i].begin){
 							deleteEdge(vertexToerase, begEl.ver);
 						}
-						for(Element endEl : this.vertices[i].end){
-							deleteEdge(endEl.ver, vertexToerase);
-						}
+//						for(Element endEl : this.vertices[i].end){
+//							deleteEdge(endEl.ver, vertexToerase);
+//						}
 						
 						this.vertices[i] = null;
 						return true;
@@ -166,17 +182,17 @@ public class ListReprGraph implements Graph {
 
 	@Override
 	public boolean addEdge(Edge edge, Vertex inVer, Vertex outVer) {
-		if(!isVertexExists(inVer, this.vertices) || !isVertexExists(outVer, this.vertices)) return false;
+//		if(!isVertexExists(inVer, this.vertices) || !isVertexExists(outVer, this.vertices)) return false;
 		Element elementBeg = new Element(edge, outVer);
-		Element elementEnd = new Element(edge, inVer);
+//		Element elementEnd = new Element(edge, inVer);
 		for(int i =0; i< this.vertices.length; i++){
 			if(this.vertices[i]!=null){
 				if(this.vertices[i].vertex.equals(inVer)){
 					this.vertices[i].begin.add(elementBeg);
 				}
-				if(this.vertices[i].vertex.equals(outVer)){
-					this.vertices[i].end.add(elementEnd);
-				}
+//				if(this.vertices[i].vertex.equals(outVer)){
+//					this.vertices[i].end.add(elementEnd);
+//				}
 			}
 		}
 		return true;
@@ -192,11 +208,11 @@ public class ListReprGraph implements Graph {
 						this.vertices[i].begin.remove(e);
 					}
 				}
-				if(this.vertices[i].vertex.equals(outVer)){
-					for(Element e: this.vertices[i].end){
-						this.vertices[i].end.remove(e);
-					}				
-				}
+//				if(this.vertices[i].vertex.equals(outVer)){
+//					for(Element e: this.vertices[i].end){
+//						this.vertices[i].end.remove(e);
+//					}				
+//				}
 			}
 		}
 		return true;
@@ -212,9 +228,9 @@ public class ListReprGraph implements Graph {
 						for(Element begEl : this.vertices[i].begin){
 							neighbours.add(begEl.ver);
 						}
-						for(Element endEl : this.vertices[i].end){
-							neighbours.add(endEl.ver);
-						}
+//						for(Element endEl : this.vertices[i].end){
+//							neighbours.add(endEl.ver);
+//						}
 						
 						this.vertices[i] = null;
 					}
@@ -234,9 +250,9 @@ public class ListReprGraph implements Graph {
 						for(Element begEl : this.vertices[i].begin){
 							incident.add(begEl.edge);
 						}
-						for(Element endEl : this.vertices[i].end){
-							incident.add(endEl.edge);
-						}
+//						for(Element endEl : this.vertices[i].end){
+//							incident.add(endEl.edge);
+//						}
 						this.vertices[i] = null;
 					}
 				}
@@ -277,9 +293,9 @@ public class ListReprGraph implements Graph {
 						for(Element e: this.vertices[i].begin){
 							if(e.ver.equals(v2)) return true;
 						}
-						for(Element e: this.vertices[i].end){
-							if(e.ver.equals(v2)) return true;
-						}
+//						for(Element e: this.vertices[i].end){
+//							if(e.ver.equals(v2)) return true;
+//						}
 					}
 				}
 			}

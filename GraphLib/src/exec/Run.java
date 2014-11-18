@@ -22,10 +22,10 @@ public class Run {
 
 	public static void init(){
 		fg = new FileGraph();
-		long mstart = System.currentTimeMillis();
-		matrix_graph = new MatrixReprGraph(fg.graphRead(path), vertices_count);
-		long mend = System.currentTimeMillis() - mstart;
-		System.out.println("MatrixFile: "+(double)mend/(double)1000);
+//		long mstart = System.currentTimeMillis();
+//		matrix_graph = new MatrixReprGraph(fg.graphRead(path), vertices_count);
+//		long mend = System.currentTimeMillis() - mstart;
+//		System.out.println("MatrixFile: "+(double)mend/(double)1000);
 
 		long lstart = System.currentTimeMillis();
 		list_graph = new ListReprGraph(fg.graphRead(path), vertices_count);
@@ -55,12 +55,12 @@ public class Run {
 		*/////////////////////////////
 		
 		
-		BellmanFordMatrix mBF= new BellmanFordMatrix(matrix_graph, vertices_count);
-		long mTimeBF = mBF.go(v1);
-		System.out.println("BellmanFord Matrix Time: "+(double)mTimeBF/(double)1000);
-		
-		System.out.println("BellmanFord matrix distance 109 - 609 "+ mBF.distance[mBF.graph.hashVertices.get(v2)]);
-		path(mBF, v1, v2);
+//		BellmanFordMatrix mBF= new BellmanFordMatrix(matrix_graph, vertices_count);
+//		long mTimeBF = mBF.go(v1);
+//		System.out.println("BellmanFord Matrix Time: "+(double)mTimeBF/(double)1000);
+//		
+//		System.out.println("BellmanFord matrix distance 109 - 609 "+ mBF.distance[mBF.graph.hashVertices.get(v2)]);
+//		path(mBF, v1, v2);
 		
 		BellmanFordList lBF= new BellmanFordList(list_graph, vertices_count);
 		long lTimeBF = lBF.go(v1);
@@ -69,7 +69,7 @@ public class Run {
 		System.out.println("BellmanFord list distance 109 - 609 "+  lBF.distance[lBF.graph.getIndex(v2)]);
 		path(lBF, v1, v2);
 		
-		System.out.println("BellmanFord R = listTime/matrixTime = "+(double)lTimeBF/(double)mTimeBF);
+//		System.out.println("BellmanFord R = listTime/matrixTime = "+(double)lTimeBF/(double)mTimeBF);
 		/**/
 	}
 

@@ -44,6 +44,7 @@ public class BellmanFordListTest {
 		
 		assertEquals(18, bf.distance[bf.graph.getIndex(v2)]);
 		vertexListList(bf, v1, v2);
+		allDistancesFromVertex(v1, bf);
 	}
 	
 	
@@ -68,11 +69,14 @@ public class BellmanFordListTest {
 //			else System.out.print("Vertex "+bf.graph.getVertexFromValue(i).getName()+"<--"+ bf.previous[i].getName());
 //		}
 //	}
-//	public void allDistancesFromVertex(Vertex source, BellmanFordList bf){
-//		System.out.println("From vertex "+source.getName());
-//		for(int i = 0; i<bf.distance.length; i++){
-//			System.out.println("to vertex "+bf.graph.getVertexFromValue(i).getName()+" distance: "+bf.distance[i]);
-//		}
-//	}
+	public void allDistancesFromVertex(Vertex source, BellmanFordList bf){
+		System.out.println("From vertex "+source.getName());
+		int unavailable = 0;
+		for(int i = 0; i<bf.distance.length; i++){
+			if(bf.distance[i] == Integer.MAX_VALUE) unavailable++;
+			System.out.println("to vertex "+bf.graph.vertices[i].getVertex().getName()+" distance: "+bf.distance[i]);
+		}
+		System.out.println("unavailable: "+unavailable);
+	}
 
 }
