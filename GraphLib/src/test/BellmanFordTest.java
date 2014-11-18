@@ -15,9 +15,11 @@ import graph.Vertex;
 public class BellmanFordTest {
 	MatrixReprGraph matrix_graph;
 	int vertices_count = 1000;
+//	int vertices_count = 13;
 	ListReprGraph list_graph;
 	
 	String path = "C:\\Users\\moni\\Documents\\agh\\IXsem\\algo\\duzy_graf.txt";
+//	String path = "C:\\Users\\moni\\Documents\\agh\\IXsem\\algo\\graf_testowy.txt";
 	FileGraph fg;
 
 	@Before
@@ -38,12 +40,14 @@ public class BellmanFordTest {
 		BellmanFordMatrix mbf= new BellmanFordMatrix(matrix_graph, vertices_count);
 		Vertex v1 = new Vertex(109);
 		Vertex v2 = new Vertex(609);
+//		long mTimeBF = mbf.go_edges(v1);
 		long mTimeBF = mbf.go(v1);
 		System.out.println("BellmanFord Matrix Time: "+(double)mTimeBF/(double)1000);
-		
+		int i =mbf.graph.hashVertices.get(v2);
 		assertEquals(18, mbf.distance[mbf.graph.hashVertices.get(v2)]);
+//		assertEquals(18, mbf.distance[109]);
 		vertexMatrixList(mbf, v1, v2);
-//		allDistancesFromVertex(v1, mbf);
+		allDistancesFromVertex(v1, mbf);
 		
 		mstart = System.currentTimeMillis();
 		this.list_graph = new ListReprGraph(fg.graphRead(path), vertices_count);
@@ -68,6 +72,7 @@ public class BellmanFordTest {
 			between = bf.previous[bf.graph.getIndex(between)];//wf.getPrevious(source, between);
 			System.out.print(between.getName()+" ");
 		}
+		System.out.println();
 	}
 
 	public void printDistanceFromVertex(BellmanFordList bf, Vertex source, Vertex dest){
@@ -99,6 +104,7 @@ public class BellmanFordTest {
 			between = bf.previous[bf.graph.hashVertices.get(between)];//wf.getPrevious(source, between);
 			System.out.print(between.getName()+" ");
 		}
+		System.out.println();
 	}
 
 	public void printDistanceFromVertex(BellmanFordMatrix bf, Vertex source, Vertex dest){

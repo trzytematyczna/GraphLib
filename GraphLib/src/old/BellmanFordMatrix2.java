@@ -1,4 +1,4 @@
-package algorithms;
+package old;
 
 import representation.MatrixReprGraph;
 import graph.Edge;

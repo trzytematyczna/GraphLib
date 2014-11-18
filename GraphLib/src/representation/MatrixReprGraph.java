@@ -83,6 +83,15 @@ public class MatrixReprGraph implements Graph{
 		}
 		return foundValue;
 	}
+	public Vertex getVertexFromName(int name){
+		Vertex foundValue = null;
+		for(Vertex v : this.hashVertices.keySet()){
+			if(v.getName() == name){
+				foundValue = v;
+			}
+		}
+		return foundValue;
+	}
 	private Edge[][] initMatrix(int size) {
 		Edge[][] newMatrix = new Edge[size][size];
 		for(int i=0; i<size; i++){
@@ -253,8 +262,10 @@ public class MatrixReprGraph implements Graph{
 	
 	public Edge getEdge(Vertex v1, Vertex v2) {
 		if(this.hashVertices.containsKey(v1) && this.hashVertices.containsKey(v2)) {
-			if(this.matrix[this.hashVertices.get(v1)][this.hashVertices.get(v2)]!=null){
-				return this.matrix[this.hashVertices.get(v1)][this.hashVertices.get(v2)];
+			int index1=this.hashVertices.get(v1);
+			int index2=this.hashVertices.get(v2);
+			if(this.matrix[index1][index2]!=null){
+				return this.matrix[index1][index2];
 			}
 		}
 		return null;

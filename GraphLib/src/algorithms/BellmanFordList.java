@@ -92,50 +92,6 @@ public class BellmanFordList {
 				}
 			}
 		}
-//			for(int u=0; u<graph.vertices.length; u++){
-//				for(int i=0; i<graph.vertices.length; i++){
-//					if(distance[i] == this.infinity) continue;
-//					for(int j=0; j<graph.vertices.length; j++){
-//						if(graph.vertices[i]!=null){
-//							Vertex v1 = graph.vertices[i].getVertex();
-//							Vertex v2 =graph.vertices[j].getVertex();
-//							Edge edge = graph.getEdge(v1, v2);
-//							if(edge!=null){
-//								int ww =  edge.getWeight();
-//								if(distance[i] + ww < distance[j]){
-//									distance[j] = distance[i] + ww;
-//									previous[j] = v1;
-//								}
-//							}
-//							
-//						}
-//					}
-//					if(graph.vertices[i]!=null){
-//						if(distance[i] == this.infinity) continue;
-//						for(Element elem : graph.vertices[i].getBeginList()){
-//							w = elem.getEdge().getWeight();
-//							if(distance[i] + w < distance[graph.getIndex(elem.getVertex())]){
-//								distance[graph.getIndex(elem.getVertex())] = distance[i] + w;
-//								previous[graph.getIndex(elem.getVertex())] = graph.vertices[i].getVertex();
-//							}
-//						}
-//					}
-//				}
-//			}
-		//checking negative-weight cycles - off
-//			for(Vertex v : graph.hashVertices.keySet()){
-//				for(Vertex v1 : graph.hashVertices.keySet()){
-//					for(Vertex v2 : graph.hashVertices.keySet()){
-//						Edge e = graph.getEdge(v1, v2);
-//						if(e!=null){
-//							w = e.getWeight();
-//							if(distance[graph.hashVertices.get(v1)] + w < distance[graph.hashVertices.get(v2)]){
-//								System.out.println("Graph contains a negative-weight cycle");
-//							}
-//						}
-//					}
-//				}
-//			}
 		return (System.currentTimeMillis() - mstart);
 	}
 

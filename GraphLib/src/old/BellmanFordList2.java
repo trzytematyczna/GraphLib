@@ -1,4 +1,4 @@
-package algorithms;
+package old;
 
 import java.util.LinkedList;
 

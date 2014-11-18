@@ -29,6 +29,9 @@ public class WarshallFloydTest {
 	
 	@Test
 	public void test() {
+		Vertex v1 = new Vertex(109);
+		Vertex v2 = new Vertex(609);
+
 		long mstart = System.currentTimeMillis();
 		this.matrix_graph = new MatrixReprGraph(fg.graphRead(path), this.vertices_count);
 		long mend = System.currentTimeMillis() - mstart;
@@ -37,6 +40,7 @@ public class WarshallFloydTest {
 		WarshallFloydMatrix mWF = new WarshallFloydMatrix(this.matrix_graph, this.vertices_count);
 		long mTime = mWF.go();
 		System.out.println("matrixTime: "+(double)mTime/(double)1000);
+		vertexMatrixList(mWF, v1, v2, matrix_graph);
 		
 		long lstart = System.currentTimeMillis();
 		this.list_graph = new ListReprGraph(fg.graphRead(path), this.vertices_count);
@@ -46,19 +50,14 @@ public class WarshallFloydTest {
 		WarshallFloydList lWF = new WarshallFloydList(this.list_graph, this.vertices_count);
 		long lTime = lWF.go();
 		System.out.println("listTime: "+(double)lTime/(double)1000);
+		vertexListList(lWF, v1, v2, list_graph);
 		
 		System.out.println("R = listTime/matrixTime = "+(double)lTime/(double)mTime);
 
-		Vertex v1 = new Vertex(109);
-		Vertex v2 = new Vertex(609);
 		
 		assertEquals(18, mWF.distances[matrix_graph.hashVertices.get(v1)][matrix_graph.hashVertices.get(v2)]);
-//		assertEquals(500, mWF.distances[matrix_graph.hashVertices.get(v1)][matrix_graph.hashVertices.get(v2)]);
-		vertexMatrixList(mWF, v1, v2, matrix_graph);
 		
 		assertEquals(18, lWF.distances[list_graph.getIndex(v1)][list_graph.getIndex(v2)]);
-//		assertEquals(500, lWF.distances[list_graph.getIndex(v1)][list_graph.getIndex(v2)]);
-		vertexListList(lWF, v1, v2, list_graph);
 	}
 
 	public void vertexMatrixList(WarshallFloydMatrix wf, Vertex source, Vertex dest, MatrixReprGraph graph){
