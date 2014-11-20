@@ -35,23 +35,27 @@ public class WarshallFloydTest {
 		long mstart = System.currentTimeMillis();
 		this.matrix_graph = new MatrixReprGraph(fg.graphRead(path), this.vertices_count);
 		long mend = System.currentTimeMillis() - mstart;
-		System.out.println("MatrixFile: "+(double)mend/(double)1000);
+//		System.out.println("MatrixFile: "+(double)mend/(double)1000);
 		
 		WarshallFloydMatrix mWF = new WarshallFloydMatrix(this.matrix_graph, this.vertices_count);
 		long mTime = mWF.go();
 		System.out.println("matrixTime: "+(double)mTime/(double)1000);
 		vertexMatrixList(mWF, v1, v2, matrix_graph);
 		
+		System.out.println("========================");
+
 		long lstart = System.currentTimeMillis();
 		this.list_graph = new ListReprGraph(fg.graphRead(path), this.vertices_count);
 		long lend = System.currentTimeMillis() - lstart;
-		System.out.println("ListFile: "+(double)lend/(double)1000);
+//		System.out.println("ListFile: "+(double)lend/(double)1000);
 		
 		WarshallFloydList lWF = new WarshallFloydList(this.list_graph, this.vertices_count);
 		long lTime = lWF.go();
 		System.out.println("listTime: "+(double)lTime/(double)1000);
 		vertexListList(lWF, v1, v2, list_graph);
 		
+		System.out.println("========================");
+
 		System.out.println("R = listTime/matrixTime = "+(double)lTime/(double)mTime);
 
 		

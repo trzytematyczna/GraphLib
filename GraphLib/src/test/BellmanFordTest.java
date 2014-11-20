@@ -35,7 +35,7 @@ public class BellmanFordTest {
 		long mstart = System.currentTimeMillis();
 		this.matrix_graph = new MatrixReprGraph(fg.graphRead(path), vertices_count);
 		long mend = System.currentTimeMillis() - mstart;
-		System.out.println("MatrixFile: "+(double)mend/(double)1000);	
+//		System.out.println("MatrixFile: "+(double)mend/(double)1000);	
 		
 		BellmanFordMatrix mbf= new BellmanFordMatrix(matrix_graph, vertices_count);
 		Vertex v1 = new Vertex(109);
@@ -43,23 +43,32 @@ public class BellmanFordTest {
 //		long mTimeBF = mbf.go_edges(v1);
 		long mTimeBF = mbf.go(v1);
 		System.out.println("BellmanFord Matrix Time: "+(double)mTimeBF/(double)1000);
-		int i =mbf.graph.hashVertices.get(v2);
 		assertEquals(18, mbf.distance[mbf.graph.hashVertices.get(v2)]);
+
+		printDistanceFromVertex(mbf, v1, v2);
 //		assertEquals(18, mbf.distance[109]);
 		vertexMatrixList(mbf, v1, v2);
+		System.out.println("========================");
 		allDistancesFromVertex(v1, mbf);
+		
+		System.out.println("========================");
 		
 		mstart = System.currentTimeMillis();
 		this.list_graph = new ListReprGraph(fg.graphRead(path), vertices_count);
 		mend = System.currentTimeMillis() - mstart;
-		System.out.println("ListFile: "+(double)mend/(double)1000);			
+//		System.out.println("ListFile: "+(double)mend/(double)1000);			
 		BellmanFordList lbf= new BellmanFordList(list_graph, vertices_count);
 		long lTimeBF = lbf.go(v1);
 		System.out.println("BellmanFord List Time: "+(double)lTimeBF/(double)1000);
-		
 		assertEquals(18, lbf.distance[lbf.graph.getIndex(v2)]);
+		
+		printDistanceFromVertex(lbf, v1, v2);
 		vertexListList(lbf, v1, v2);
-//		allDistancesFromVertex(v1, lbf);
+		System.out.println("========================");
+		allDistancesFromVertex(v1, lbf);
+		
+		System.out.println("========================");
+		
 		System.out.println("BellmanFord R = listTime/matrixTime = "+(double)lTimeBF/(double)mTimeBF);
 
 	}
@@ -76,8 +85,8 @@ public class BellmanFordTest {
 	}
 
 	public void printDistanceFromVertex(BellmanFordList bf, Vertex source, Vertex dest){
-		System.out.println("From vertex "+source.getName());
-		System.out.println("to vertex "+dest.getName()+" distance: "+bf.distance[bf.graph.getIndex(dest)]);
+		System.out.print("From vertex "+source.getName());
+		System.out.println(" to vertex "+dest.getName()+" distance: "+bf.distance[bf.graph.getIndex(dest)]);
 	}
 
 //	//print all methods
@@ -92,8 +101,9 @@ public class BellmanFordTest {
 		int unavailable = 0;
 		for(int i = 0; i<bf.distance.length; i++){
 			if(bf.distance[i] == Integer.MAX_VALUE) unavailable++;
-			System.out.println("to vertex "+bf.graph.vertices[i].getVertex().getName()+" distance: "+bf.distance[i]);
+			System.out.print("to vertex "+bf.graph.vertices[i].getVertex().getName()+" distance: "+bf.distance[i]+"\t");
 		}
+		System.out.println();
 		System.out.println("unavailable: "+unavailable);
 	}
 	
@@ -108,24 +118,25 @@ public class BellmanFordTest {
 	}
 
 	public void printDistanceFromVertex(BellmanFordMatrix bf, Vertex source, Vertex dest){
-		System.out.println("From vertex "+source.getName());
-		System.out.println("to vertex "+dest.getName()+" distance: "+bf.distance[bf.graph.hashVertices.get(dest)]);
+		System.out.print("From vertex "+source.getName());
+		System.out.println(" to vertex "+dest.getName()+" distance: "+bf.distance[bf.graph.hashVertices.get(dest)]);
 	}
 
-	//print all methods
-	public void printPrevious(BellmanFordMatrix bf){
-		for(int i = 0; i< bf.previous.length; i++){
-			if(bf.previous[i] == null) System.out.print("Vertex "+bf.graph.getVertexFromValue(i).getName()+"<--"+ bf.previous[i]);//.getName());
-			else System.out.print("Vertex "+bf.graph.getVertexFromValue(i).getName()+"<--"+ bf.previous[i].getName());
-		}
-	}
+//	//print all methods
+//	public void printPrevious(BellmanFordMatrix bf){
+//		for(int i = 0; i< bf.previous.length; i++){
+//			if(bf.previous[i] == null) System.out.print("Vertex "+bf.graph.getVertexFromValue(i).getName()+"<--"+ bf.previous[i]);//.getName());
+//			else System.out.print("Vertex "+bf.graph.getVertexFromValue(i).getName()+"<--"+ bf.previous[i].getName());
+//		}
+//	}
 	public void allDistancesFromVertex(Vertex source, BellmanFordMatrix bf){
 		System.out.println("From vertex "+source.getName());
 		int unavailable = 0;
 		for(int i = 0; i<bf.distance.length; i++){
 			if(bf.distance[i] == Integer.MAX_VALUE) unavailable++;
-			System.out.println("to vertex "+bf.graph.getVertexFromValue(i).getName()+" distance: "+bf.distance[i]);
+			System.out.print("to vertex "+bf.graph.getVertexFromValue(i).getName()+" distance: "+bf.distance[i]+"\t");
 		}
+		System.out.println();
 		System.out.println("unavailable: "+unavailable);
 	}
 }
