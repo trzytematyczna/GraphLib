@@ -1,4 +1,4 @@
-package algorithms;
+package algorithms_done;
 
 import representation.ListReprGraph;
 import graph.Vertex;

@@ -1,4 +1,4 @@
-package test;
+package test_done;
 
 import static org.junit.Assert.*;
 
@@ -7,8 +7,8 @@ import org.junit.Test;
 
 import representation.ListReprGraph;
 import representation.MatrixReprGraph;
-import algorithms.BellmanFordList;
-import algorithms.BellmanFordMatrix;
+import algorithms_done.BellmanFordList;
+import algorithms_done.BellmanFordMatrix;
 import files.FileGraph;
 import graph.Vertex;
 

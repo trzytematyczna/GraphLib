@@ -1,11 +1,11 @@
-package test;
+package test_done;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import algorithms.WarshallFloydMatrix;
+import algorithms_done.WarshallFloydMatrix;
 import representation.MatrixReprGraph;
 import files.FileGraph;
 import graph.Vertex;

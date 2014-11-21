@@ -1,4 +1,4 @@
-package algorithms;
+package algorithms_done;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

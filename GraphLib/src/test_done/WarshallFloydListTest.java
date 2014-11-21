@@ -1,4 +1,4 @@
-package test;
+package test_done;
 
 import static org.junit.Assert.*;
 
@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import representation.ListReprGraph;
-import algorithms.WarshallFloydList;
+import algorithms_done.WarshallFloydList;
 import files.FileGraph;
 import graph.Vertex;
 

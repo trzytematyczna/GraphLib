@@ -3,10 +3,10 @@ package exec;
 
 import representation.ListReprGraph;
 import representation.MatrixReprGraph;
-import algorithms.BellmanFordList;
-import algorithms.BellmanFordMatrix;
-import algorithms.WarshallFloydList;
-import algorithms.WarshallFloydMatrix;
+import algorithms_done.BellmanFordList;
+import algorithms_done.BellmanFordMatrix;
+import algorithms_done.WarshallFloydList;
+import algorithms_done.WarshallFloydMatrix;
 import files.FileGraph;
 import graph.Vertex;
 

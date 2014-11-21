@@ -1,11 +1,11 @@
-package test;
+package test_done;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import algorithms.BellmanFordMatrix;
+import algorithms_done.BellmanFordMatrix;
 import representation.MatrixReprGraph;
 import files.FileGraph;
 import graph.Vertex;
