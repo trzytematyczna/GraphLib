@@ -10,4 +10,7 @@ public class incidentEdgeVertex {
 		this.vertex=v;
 		this.edge=e;
 	}
+	public incidentEdgeVertex(Vertex v) {
+		this.vertex=v;
+	}
 }

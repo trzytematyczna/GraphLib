@@ -316,5 +316,15 @@ public class MatrixReprGraph implements Graph{
 		}
 		return count;
 	}
+	public LinkedList<Edge> getAllEdges(){
+		LinkedList<Edge> edges= new LinkedList<Edge>();
+			for(int i=0; i<this.matrix.length; i++){
+				for(int j=0; j<this.matrix.length; j++){
+					if(this.matrix[i][j]!=null) edges.add(this.matrix[i][j]);
+				}
+			}
+		
+		return edges;
+	}
 }
 

@@ -13,6 +13,7 @@ public class FordFulkersonMatrix {
 	Vertex destination;
 	MatrixReprGraph graph;
 	LinkedList<FFEdge> edges;
+	int min;
 	
 	public FordFulkersonMatrix(Vertex sour, Vertex dest, LinkedList<Edge> edg) {
 		this.source = sour;
@@ -22,162 +23,107 @@ public class FordFulkersonMatrix {
 		}
 	}
 	
-	public FordFulkersonMatrix(MatrixReprGraph graph) {
+	public FordFulkersonMatrix(MatrixReprGraph graph,Vertex sour, Vertex dest) {
 		this.graph = graph;
-	}
-
-	public void go(){
-//		LinkedList<Vertex> path =  findPath(this.source, this.destination);
-		Vertex[] path =  findPath(this.source, this.destination);
-		int minWeight=-1;
-		int i=0;
-		while(path[i++]!=null){
-//			minWeight = findMinWeight(path);
-			for(FFEdge ffe : this.edges){
-				if(ffe.weight == minWeight) continue;
-				ffe.flow+= (ffe.weight - minWeight);
-			}
-			path = findPath(this.source, this.destination, minWeight);
+		this.source = sour;
+		this.destination = dest;
+		this.edges = new LinkedList<FFEdge>();
+		for(Edge e : this.graph.getAllEdges()){
+			this.edges.add(new FFEdge(e.getWeight(),0));
 		}
 	}
 
-	private int findMinWeight(LinkedList<Vertex> path) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int go(){
+		int maxFlow=0;
+//		LinkedList<Vertex> path =  findPath(this.source, this.destination);
+		LinkedList<Vertex> path =  findPath(this.source, this.destination);
+		int pathFlow=-1;
+		while(!path.isEmpty()){
+			pathFlow  = findMinWeight(path);
+
+			for (int i=0; i<path.size()-1;i++){
+				Vertex v1= path.get(i);
+				Vertex v2 = path.get(i+1);
+				int from = this.graph.hashVertices.get(v1);
+				int to = this.graph.hashVertices.get(v2);
+				
+				this.graph.matrix[from][to].setWeight((this.graph.matrix[from][to].getWeight())+pathFlow);
+				
+				if(this.graph.matrix[to][from]!=null){
+						this.graph.matrix[to][from].setWeight((this.graph.matrix[to][from].getWeight())-pathFlow);
+				}
+				else{
+					this.graph.addEdge(new Edge(pathFlow),v2, v1);
+//					this.graph.addVertex(path.get(++i));
+//					this.graph.matrix[to][from]= new Edge((this.graph.matrix[to][from].getWeight())-pathFlow);					
+				}
+				int p=0;
+			}
+			maxFlow+=pathFlow;
+			path = findPath(this.source, this.destination);
+		}
+		return pathFlow;
 	}
-	public /*LinkedList<Vertex> */Vertex[] findPath(Vertex source, Vertex destination, int minWeight) {
+
+	private int findMinWeight(LinkedList<Vertex> path) {
+		int minWeight=Integer.MAX_VALUE;
+
+		for (int i=0; i<path.size()-1;){
+			int from = this.graph.hashVertices.get(path.get(i));
+			int to = this.graph.hashVertices.get(path.get(++i));
+			
+		
+			if (this.graph.matrix[from][to].getWeight() < minWeight){
+				minWeight = this.graph.matrix[from][to].getWeight();
+			}
+		}
+		return minWeight;
+	}
+	public LinkedList<Vertex> findPath(Vertex source, Vertex destination) {
 	LinkedList<Vertex> stack = new LinkedList<Vertex>();
 	LinkedList<Vertex> list = new LinkedList<Vertex>();
-	Vertex[] parent = new Vertex[graph.hashVertices.size()];
+	Vertex[] parent = new Vertex[this.graph.hashVertices.size()];
 	boolean marked[] =  initMarked();
-//	boolean deadend=true;
-//	boolean end=false;
 	Vertex v;
 	
 	stack.add(source);
-	marked[graph.hashVertices.get(source)]=true;
-	parent[graph.hashVertices.get(source)]=new Vertex(-1);
+	marked[this.graph.hashVertices.get(source)]=true;
+	parent[this.graph.hashVertices.get(source)]=new Vertex(-1);
 	int i=0;
 	while(!stack.isEmpty()){
 		v = stack.getLast();
-//		deadend=true;
-		for(incidentEdgeVertex ev : graph.incidentEdges2(v)){
-//			deadend = false;
-			int index = graph.hashVertices.get(ev.vertex);
+		for(incidentEdgeVertex ev : this.graph.incidentEdges2(v)){
+			int index = this.graph.hashVertices.get(ev.vertex);
 			if(marked[index]==false){
 				stack.add(ev.vertex);
 				marked[index]=true;
 				parent[index] = v;
 				if(ev.vertex.equals(destination)) {
-//					int i;
 					Vertex tempDest = destination;
-					while(!parent[graph.hashVertices.get(tempDest)].equals(new Vertex(-1))){
+					while(!parent[this.graph.hashVertices.get(tempDest)].equals(new Vertex(-1))){
 						list.add(tempDest);
-						tempDest = parent[graph.hashVertices.get(tempDest)];
+						tempDest = parent[this.graph.hashVertices.get(tempDest)];
 //						if(minWeight<)
 					}
 					list.add(tempDest);
-//					end=true;
 					break;
 				}
 			}
 		}
-//		if(deadend==true || end == true){
 			stack.remove(v);
-//		}
 	}
-	return parent;
+	
+	return reverse(list);
 }
 
-//	public LinkedList<Vertex> /*Vertex[]*/ findPath(Vertex source, Vertex destination) {
-//		LinkedList<Vertex> stack = new LinkedList<Vertex>();
-//		boolean marked[] =  initMarked();
-//		Vertex[] list = new Vertex[graph.hashVertices.size()];
-//		stack.add(source);
-//		list[graph.hashVertices.get(source)]=source;
-//		while(!stack.isEmpty()){
-//			if(bfs(stack, list, stack.removeFirst(), destination, marked))
-//				break;
-//		}
-//		return stack;
-//	}
-//	
-//	public boolean bfs(LinkedList<Vertex> stack, Vertex[] list, Vertex source, Vertex dest, boolean[] marked){
-//		if(source.equals(destination)) {
-//			return true;
-//		}
-//		if(!marked[graph.hashVertices.get(source)]){
-//			marked[graph.hashVertices.get(source)]=true;
-//			for(incidentEdgeVertex ev : graph.incidentEdges2(source)){
-//				list[graph.hashVertices.get(ev.vertex)] = ev.vertex;
-//				stack.add(ev.vertex);
-//			}			
-//		}
-//		return false;
-//	}
-	
-	
-
-//	public LinkedList<Vertex> /*Vertex[]*/ findPath(Vertex source, Vertex destination) {
-//		LinkedList<Vertex> stack = new LinkedList<Vertex>();
-//		LinkedList<Vertex> list = new LinkedList<Vertex>();
-//		Vertex[] asd = new Vertex[graph.hashVertices.size()];
-//		boolean marked[] =  initMarked();
-//		Vertex v;
-//		
-//		stack.add(source);
-//		marked[graph.hashVertices.get(source)]=true;
-//		asd[graph.hashVertices.get(source)]=new Vertex(-1);
-//		for(incidentEdgeVertex ev : graph.incidentEdges2(source)){
-//			stack.add(ev.vertex);
-//		}
-//		while(!stack.isEmpty()){
-//			v = stack.getLast();
-//			//stack.remove(v);
-//			for(incidentEdgeVertex ev : graph.incidentEdges2(v)){
-//				int index = graph.hashVertices.get(ev.vertex);
-//				if(marked[index]==false){
-//					marked[index]=true;
-//					stack.add(ev.vertex);
-//					asd[index] = ev.vertex;
-//					if(ev.vertex.equals(destination)) {
-//						int i;
-//						Vertex tempDest = destination;
-//						while(!asd[graph.hashVertices.get(tempDest)].equals(new Vertex(-1))){
-//							list.add(tempDest);
-//							tempDest = asd[graph.hashVertices.get(tempDest)];
-//						}
-//						list.add(tempDest);
-////						return stack;
-//						return list;
-////						return asd;
-//					}
-//				}
-//			}
-//		}
-//		while(!stack.isEmpty()){
-//			v = stack.getLast();
-////			stack.removeFirst();
-//			int index = graph.hashVertices.get(v);
-//			if(!marked[index]){
-//				marked[index]=true;
-//				if(v.equals(destination)) {
-//					int i;
-//					return stack;
-//				}
-//				for(incidentEdgeVertex ev : graph.incidentEdges2(v)){
-//					stack.add(ev.vertex);
-//				}
-//			}
-//			else{
-//				stack.removeLast();
-//			}
-//		}
-//		return list;
-//		return asd;
-//		return stack;
-//	}
-
+	private LinkedList<Vertex> reverse(LinkedList<Vertex> list){
+		LinkedList<Vertex> nestlist = new LinkedList<Vertex>();
+		int ji=list.size();
+		for(int i=list.size()-1; i>=0; i--){
+			nestlist.add(list.get(i));
+		}
+		return nestlist;
+	}
 	private boolean[] initMarked() {
 		boolean marked[] = new boolean[graph.hashVertices.size()];
 		for(int i : graph.hashVertices.values()){

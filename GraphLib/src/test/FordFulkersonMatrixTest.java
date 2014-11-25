@@ -30,12 +30,13 @@ private FileGraph fg;
 		this.matrix_graph = new MatrixReprGraph(fg.graphRead(path), vertices_count);
 		long mend = System.currentTimeMillis() - mstart;
 		System.out.println("MatrixFile: "+(double)mend/(double)1000);	
-		this.ffm = new FordFulkersonMatrix(this.matrix_graph);
+		this.ffm = new FordFulkersonMatrix(this.matrix_graph, new Vertex(109), new Vertex(609));
 	}
 	@Test
 	public void test() {
-		ffm.findPath(new Vertex(109), new Vertex(609));
-	
+//		ffm.findPath(new Vertex(109), new Vertex(609));
+		int i = ffm.go();
+		System.out.println("wynik: "+i);
 	}
 
 }
