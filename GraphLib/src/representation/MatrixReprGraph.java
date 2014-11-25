@@ -7,6 +7,8 @@ import graph.Vertex;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import algorithms.incidentEdgeVertex;
+
 public class MatrixReprGraph implements Graph{
 	
 	public Edge[][] matrix;
@@ -219,6 +221,24 @@ public class MatrixReprGraph implements Graph{
 		}
 		return incident;
 	}
+	
+	public LinkedList<incidentEdgeVertex> incidentEdges2(Vertex vertex) {
+		LinkedList<incidentEdgeVertex> incident = new LinkedList<incidentEdgeVertex>();
+		if(this.hashVertices.containsKey(vertex)){
+			int position = this.hashVertices.get(vertex);//getVertexValue(vertex.getName());
+			for(int i=0; i<this.matrix.length; i++){
+				if(this.matrix[position][i] != null)  {
+					Vertex v = this.getVertexFromValue(i);
+					incident.add(new incidentEdgeVertex(v, this.matrix[position][i]));
+				}
+//				if(this.matrix[i][position] != null){
+//					Vertex v = this.getVertexFromValue(i);
+//					incident.add(new incidentEdgeVertex(v, this.matrix[i][position]));
+//				}
+			}
+		}
+		return incident;
+	}
 
 	@Override
 	public int vertexCount() {
@@ -297,3 +317,4 @@ public class MatrixReprGraph implements Graph{
 		return count;
 	}
 }
+
