@@ -7,6 +7,7 @@ import graph.Vertex;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import algorithms.FulkersonEdge;
 import algorithms.incidentEdgeVertex;
 
 public class MatrixReprGraph implements Graph{

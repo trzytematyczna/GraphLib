@@ -144,4 +144,5 @@ class FFEdge{
 		this.weight = wei;
 		this.flow = initFlow;
 	}
+	
 }
