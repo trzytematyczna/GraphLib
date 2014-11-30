@@ -1,14 +1,12 @@
 package algorithms;
 
-
 import java.util.LinkedList;
-import java.util.ListIterator;
 
 import graph.Edge;
 import graph.Vertex;
 import representation.MatrixReprGraph;
 
-public class FordFulkersonMatrix3 {
+public class FordFulkersonMatrix4 {
 
 	Vertex source;
 	Vertex destination;
@@ -16,7 +14,7 @@ public class FordFulkersonMatrix3 {
 	LinkedList<incidentEdgeVertex> ffedges;
 	int min;
 	
-	public FordFulkersonMatrix3(MatrixReprGraph graph,Vertex sour, Vertex dest) {
+	public FordFulkersonMatrix4(MatrixReprGraph graph,Vertex sour, Vertex dest) {
 		this.graph = graph;
 		this.source = sour;
 		this.destination = dest;
@@ -35,39 +33,29 @@ public class FordFulkersonMatrix3 {
 		LinkedList<incidentEdgeVertex> path =  findPath(this.source, this.destination);
 		int pathFlow=-1;
 		while(!path.isEmpty()){
-			pathFlow  = findMinWeight(path);
+			pathFlow  = this.min;//findMinWeight(path);
 			for(incidentEdgeVertex ev : path){
 							
-//				incidentEdgeVertex ev = getEdge(from,to);
+//					incidentEdgeVertex ev = getEdge(from,to);
 				ev.edge.setWeight(ev.edge.getWeight()-pathFlow);
 				ev.setFlow(ev.flow+pathFlow);
 
 			}
 			
-//			ListIterator<incidentEdgeVertex> iterator = path.listIterator();
-//			int i=0;
-//			while(i<path.size()-1){
-//				Vertex to = iterator.next();
-//				Vertex from = iterator.next();
-//				i+=2;
-//				incidentEdgeVertex ev = getEdge(from,to);
-//				ev.edge.setWeight(ev.edge.getWeight()-pathFlow);
-//				ev.setFlow(ev.flow+pathFlow);
-//			}
 			maxFlow+=pathFlow;
 			path = findPath(this.source, this.destination);
 		}
 		return maxFlow;
 	}
 
-//	private incidentEdgeVertex getEdge(Vertex v1, Vertex v2) {
-//		for(incidentEdgeVertex ev : this.ffedges){
-//			if(ev.invertex.equals(v1) && ev.outvertex.equals(v2)){
-//				return ev;
+//		private incidentEdgeVertex getEdge(Vertex v1, Vertex v2) {
+//			for(incidentEdgeVertex ev : this.ffedges){
+//				if(ev.invertex.equals(v1) && ev.outvertex.equals(v2)){
+//					return ev;
+//				}
 //			}
+//			return null;
 //		}
-//		return null;
-//	}
 	private int findMinWeight(LinkedList<incidentEdgeVertex> path) {
 		int minWeight=Integer.MAX_VALUE;
 		for(incidentEdgeVertex ev : path){
@@ -75,16 +63,16 @@ public class FordFulkersonMatrix3 {
 				minWeight = ev.edge.getWeight();
 			}
 		}
-//		ListIterator<Vertex> iterator = path.listIterator();
-//		int i=0;
-//		while(i<path.size()-1){
-//			int to = this.graph.hashVertices.get(iterator.next());
-//			int from = this.graph.hashVertices.get(iterator.next());
-//			i+=2;
-//			if (this.graph.matrix[from][to].getWeight() < minWeight){
-//				minWeight = this.graph.matrix[from][to].getWeight();
+//			ListIterator<Vertex> iterator = path.listIterator();
+//			int i=0;
+//			while(i<path.size()-1){
+//				int to = this.graph.hashVertices.get(iterator.next());
+//				int from = this.graph.hashVertices.get(iterator.next());
+//				i+=2;
+//				if (this.graph.matrix[from][to].getWeight() < minWeight){
+//					minWeight = this.graph.matrix[from][to].getWeight();
+//				}
 //			}
-//		}
 		
 		return minWeight;
 	}
@@ -109,16 +97,16 @@ public class FordFulkersonMatrix3 {
 						marked[index]=true;
 						parent[index] = v;
 						if(ev.outvertex.equals(destination)) {
-//							incidentEdgeVertex tempDest = new incidentEdgeVertex(new Vertex(-1), destination, new Edge(-1), -1);
+//								incidentEdgeVertex tempDest = new incidentEdgeVertex(new Vertex(-1), destination, new Edge(-1), -1);
 							incidentEdgeVertex tempDest = ev;
 							this.min= Integer.MAX_VALUE;
-//							while(!parent[this.graph.hashVertices.get(tempDest.outvertex)].invertex.equals(source)){
+//								while(!parent[this.graph.hashVertices.get(tempDest.outvertex)].invertex.equals(source)){
 							while(!parent[this.graph.hashVertices.get(tempDest.invertex)].invertex.equals(new Vertex(-1))){
 								list.add(tempDest);
 								tempDest = parent[this.graph.hashVertices.get(tempDest.invertex)];
-//								if(tempDest.edge.getWeight()< this.min){
-//									this.min=tempDest.edge.getWeight();
-//								}
+								if(tempDest.edge.getWeight()< this.min){
+									this.min=tempDest.edge.getWeight();
+								}
 							}
 							list.add(tempDest);
 							break;
@@ -129,18 +117,9 @@ public class FordFulkersonMatrix3 {
 				stack.remove(v);
 	}
 	
-//		return reverse(list);
 		return list;
 }
 
-	private LinkedList<Vertex> reverse(LinkedList<Vertex> list){
-		LinkedList<Vertex> nestlist = new LinkedList<Vertex>();
-//			int ji=list.size();
-		for(int i=list.size()-1; i>=0; i--){
-			nestlist.add(list.get(i));
-		}
-		return nestlist;
-	}
 	private boolean[] initMarked() {
 		boolean marked[] = new boolean[graph.hashVertices.size()];
 		for(int i : graph.hashVertices.values()){
@@ -153,7 +132,7 @@ public class FordFulkersonMatrix3 {
 		LinkedList<incidentEdgeVertex> list = new LinkedList<incidentEdgeVertex>();
 		for(incidentEdgeVertex ev : this.ffedges){
 			if(ev.invertex.equals(v.outvertex)){
-//			if(ev.outvertex.equals(v.outvertex)){
+//				if(ev.outvertex.equals(v.outvertex)){
 				list.add(ev);
 			}
 		}

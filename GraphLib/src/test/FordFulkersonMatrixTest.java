@@ -10,10 +10,12 @@ import org.junit.Test;
 
 import representation.MatrixReprGraph;
 import algorithms.FordFulkersonMatrix2;
+import algorithms.FordFulkersonMatrix3;
 
 public class FordFulkersonMatrixTest {
 
-FordFulkersonMatrix2 ffm;
+//FordFulkersonMatrix2 ffm;
+FordFulkersonMatrix3 ffm;
 int vertices_count = 1000;
 //int vertices_count = 20;
 //int vertices_count = 13;
@@ -33,8 +35,9 @@ private FileGraph fg;
 		this.matrix_graph = new MatrixReprGraph(fg.graphRead(path), vertices_count);
 		long mend = System.currentTimeMillis() - mstart;
 		System.out.println("MatrixFile: "+(double)mend/(double)1000);	
-		this.ffm = new FordFulkersonMatrix2(this.matrix_graph, new Vertex(109), new Vertex(609));
-//		this.ffm = new FordFulkersonMatrix2(this.matrix_graph, new Vertex(1), new Vertex(18));
+		this.ffm = new FordFulkersonMatrix3(this.matrix_graph, new Vertex(109), new Vertex(609));
+//		this.ffm = new FordFulkersonMatrix2(this.matrix_graph, new Vertex(9), new Vertex(3));
+//		this.ffm = new FordFulkersonMatrix3(this.matrix_graph, new Vertex(9), new Vertex(3));
 	}
 	@Test
 	public void test() {

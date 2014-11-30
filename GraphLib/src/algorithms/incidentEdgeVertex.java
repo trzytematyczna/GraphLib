@@ -15,13 +15,7 @@ public class incidentEdgeVertex {
 		this.edge=e;
 		this.flow = flow;
 	}
-	
-	//erase this
-	public incidentEdgeVertex(Vertex v, Edge e) {
-		this.invertex=v;
-		this.edge=e;
-		this.flow = flow;
-	}
+		
 	public void setWeight(int x){
 		this.edge.setWeight(x);
 	}
