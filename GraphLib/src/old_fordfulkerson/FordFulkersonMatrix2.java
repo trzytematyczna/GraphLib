@@ -1,8 +1,9 @@
-package algorithms;
+package old_fordfulkerson;
 
 import java.util.LinkedList;
 import java.util.ListIterator;
 
+import algorithms.incidentEdgeVertex;
 import graph.Vertex;
 import representation.MatrixReprGraph;
 
