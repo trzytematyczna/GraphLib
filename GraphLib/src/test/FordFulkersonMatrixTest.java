@@ -8,11 +8,13 @@ import old_fordfulkerson.FordFulkersonMatrix2;
 import old_fordfulkerson.FordFulkersonMatrix4;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import representation.MatrixReprGraph;
 import algorithms.FordFulkersonMatrix3;
 
+@Ignore
 public class FordFulkersonMatrixTest {
 
 	FordFulkersonMatrix3 ffm;

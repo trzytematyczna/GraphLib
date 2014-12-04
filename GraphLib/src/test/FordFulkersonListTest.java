@@ -6,11 +6,11 @@ import graph.Vertex;
 import old.FordFulkersonMatrix;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import representation.ListReprGraph;
 import algorithms.FordFulkersonList;
-
 
 public class FordFulkersonListTest {
 	
@@ -35,7 +35,7 @@ public class FordFulkersonListTest {
 			long mstart = System.currentTimeMillis();
 			this.graph = new ListReprGraph(fg.graphRead(path), vertices_count);
 			long mend = System.currentTimeMillis() - mstart;
-			System.out.println("MatrixFile: "+(double)mend/(double)1000);	
+			System.out.println("List TEst ListFile: "+(double)mend/(double)1000);	
 			this.ffm = new FordFulkersonList(this.graph, new Vertex(109), new Vertex(609));
 //			this.ffm = new FordFulkersonList(this.graph, new Vertex(9), new Vertex(3));
 	}

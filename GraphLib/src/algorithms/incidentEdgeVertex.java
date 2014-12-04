@@ -10,9 +10,9 @@ public class incidentEdgeVertex {
 	int flow;
 	
 	public incidentEdgeVertex(Vertex v, Vertex o,Edge e, int flow) {
-		this.invertex=v;
-		this.outvertex = o;
-		this.edge=e;
+		this.invertex=new Vertex(v.getName());
+		this.outvertex = new Vertex(o.getName());
+		this.edge= new Edge(e.getWeight());
 		this.flow = flow;
 	}
 		

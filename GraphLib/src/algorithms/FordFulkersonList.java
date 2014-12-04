@@ -24,26 +24,33 @@ public class FordFulkersonList {
 		this.size = this.graph.vertices.length+1;
 		this.ffedges = new LinkedList<incidentEdgeVertex>();
 		for(listRep li: this.graph.vertices){
-			for(Element el : li.getBeginList()){
-					this.ffedges.add(new incidentEdgeVertex(li.getVertex(), el.getVertex(), el.getEdge(), 0));
+			if(li!=null){
+				for(Element el : li.getBeginList()){
+						this.ffedges.add(new incidentEdgeVertex(li.getVertex(), el.getVertex(), el.getEdge(), 0));
+				}
 			}
 		}
-		
+		int i=0;
+		i++;
 	}
 
 	public int go(){
 		int maxFlow=0;
 		LinkedList<incidentEdgeVertex> path =  findPath(this.source, this.destination);
 		int pathFlow=-1;
+		int count = 1;
 		while(!path.isEmpty()){
 			pathFlow  = findMinWeight(path);
 			for(incidentEdgeVertex ev : path){
 				ev.edge.setWeight(ev.edge.getWeight()-pathFlow);
 				ev.setFlow(ev.flow+pathFlow);
-
+				if(ev.edge.getWeight() <= 0){
+					this.ffedges.remove(ev);
+				}
 			}
 			maxFlow+=pathFlow;
 			path = findPath(this.source, this.destination);
+			count++;
 		}
 		return maxFlow;
 	}
@@ -66,14 +73,11 @@ public class FordFulkersonList {
 		incidentEdgeVertex v;
 		
 		stack.add(new incidentEdgeVertex(new Vertex(-1), source, new Edge(-1), -1));
-//		marked[this.graph.hashVertices.get(source)]=true;
-//		parent[this.graph.hashVertices.get(source)]=new incidentEdgeVertex(new Vertex(-1), source, new Edge(-1),-1);
 		marked[source.getName()]=true;
 		parent[source.getName()]=new incidentEdgeVertex(new Vertex(-1), source, new Edge(-1),-1);
 		while(!stack.isEmpty()){
 			v = stack.getLast();
 			for(incidentEdgeVertex ev : incidentEdgesFF(v)){//this.graph.incidentEdges2(v)){
-//				int index = this.graph.hashVertices.get(ev.outvertex);
 				int index = ev.outvertex.getName();
 				if(marked[index]==false){
 					if(ev.edge.getWeight()>0){
@@ -86,7 +90,6 @@ public class FordFulkersonList {
 //							while(!parent[this.graph.hashVertices.get(tempDest.invertex)].invertex.equals(new Vertex(-1))){
 							while(!parent[tempDest.invertex.getName()].invertex.equals(new Vertex(-1))){
 								list.add(tempDest);
-//								tempDest = parent[this.graph.hashVertices.get(tempDest.invertex)];
 								tempDest = parent[tempDest.invertex.getName()];
 //								if(tempDest.edge.getWeight()< this.min){
 //									this.min=tempDest.edge.getWeight();

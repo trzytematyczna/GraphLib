@@ -38,9 +38,12 @@ public class FordFulkersonMatrix3 {
 			pathFlow  = findMinWeight(path);
 			for(incidentEdgeVertex ev : path){
 							
-//				incidentEdgeVertex ev = getEdge(from,to);
 				ev.edge.setWeight(ev.edge.getWeight()-pathFlow);
 				ev.setFlow(ev.flow+pathFlow);
+				
+				if(ev.edge.getWeight() <= 0){
+					this.ffedges.remove(ev);
+				}
 
 			}
 			
@@ -109,10 +112,8 @@ public class FordFulkersonMatrix3 {
 						marked[index]=true;
 						parent[index] = v;
 						if(ev.outvertex.equals(destination)) {
-//							incidentEdgeVertex tempDest = new incidentEdgeVertex(new Vertex(-1), destination, new Edge(-1), -1);
 							incidentEdgeVertex tempDest = ev;
 							this.min= Integer.MAX_VALUE;
-//							while(!parent[this.graph.hashVertices.get(tempDest.outvertex)].invertex.equals(source)){
 							while(!parent[this.graph.hashVertices.get(tempDest.invertex)].invertex.equals(new Vertex(-1))){
 								list.add(tempDest);
 								tempDest = parent[this.graph.hashVertices.get(tempDest.invertex)];
@@ -129,13 +130,11 @@ public class FordFulkersonMatrix3 {
 				stack.remove(v);
 	}
 	
-//		return reverse(list);
 		return list;
 }
 
 	private LinkedList<Vertex> reverse(LinkedList<Vertex> list){
 		LinkedList<Vertex> nestlist = new LinkedList<Vertex>();
-//			int ji=list.size();
 		for(int i=list.size()-1; i>=0; i--){
 			nestlist.add(list.get(i));
 		}
@@ -153,7 +152,6 @@ public class FordFulkersonMatrix3 {
 		LinkedList<incidentEdgeVertex> list = new LinkedList<incidentEdgeVertex>();
 		for(incidentEdgeVertex ev : this.ffedges){
 			if(ev.invertex.equals(v.outvertex)){
-//			if(ev.outvertex.equals(v.outvertex)){
 				list.add(ev);
 			}
 		}

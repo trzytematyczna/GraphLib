@@ -222,7 +222,30 @@ public class MatrixReprGraph implements Graph{
 		}
 		return incident;
 	}
-	
+	public LinkedList<Edge> incidentEdgesOUT(Vertex vertex) {
+		LinkedList<Edge> incident = new LinkedList<Edge>();
+		if(this.hashVertices.containsKey(vertex)){
+			int position = this.hashVertices.get(vertex);//getVertexValue(vertex.getName());
+			for(int i=0; i<this.matrix.length; i++){
+				if(this.matrix[position][i] != null)  {
+					incident.add(this.matrix[position][i]);
+				}
+			}
+		}
+		return incident;
+	}
+	public LinkedList<Edge> incidentEdgesIN(Vertex vertex) {
+		LinkedList<Edge> incident = new LinkedList<Edge>();
+		if(this.hashVertices.containsKey(vertex)){
+			int position = this.hashVertices.get(vertex);//getVertexValue(vertex.getName());
+			for(int i=0; i<this.matrix.length; i++){
+				if(this.matrix[i][position] != null){
+					incident.add(this.matrix[i][position]);
+				}
+			}
+		}
+		return incident;
+	}
 //	public LinkedList<incidentEdgeVertex> incidentEdges2(Vertex vertex) {
 //		LinkedList<incidentEdgeVertex> incident = new LinkedList<incidentEdgeVertex>();
 //		if(this.hashVertices.containsKey(vertex)){

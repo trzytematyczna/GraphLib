@@ -55,6 +55,10 @@ public class ListReprGraph implements Graph {
 		public LinkedList<Element> getBeginList(){
 			return this.begin;
 		}
+		public boolean notNull(){
+			if(this.begin!=null) return true;
+			return false;
+		}
 //		public LinkedList<Element> getEndList(){
 //			return this.end;
 //		}
@@ -250,16 +254,29 @@ public class ListReprGraph implements Graph {
 						for(Element begEl : this.vertices[i].begin){
 							incident.add(begEl.edge);
 						}
-//						for(Element endEl : this.vertices[i].end){
-//							incident.add(endEl.edge);
-//						}
-						this.vertices[i] = null;
 					}
 				}
 			}
 		}
 		return incident;
 	}
+	
+	public LinkedList<Edge> incidentEdgesIN(Vertex vertex) {
+		LinkedList<Edge> incident = new LinkedList<Edge>();
+		if(isVertexExists(vertex, this.vertices)){
+			for(int i=0; i<this.vertices.length; i++){
+				if(this.vertices[i]!=null){
+						for(Element begEl : this.vertices[i].begin){
+							if(begEl.ver.equals(vertex)){
+								incident.add(begEl.edge);
+							}
+						}
+				}
+			}
+		}
+		return incident;
+	}
+	
 
 	@Override
 	public int vertexCount() {
